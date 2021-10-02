@@ -6,6 +6,14 @@ This project develops a tool to objectively assess relative code contributions b
 
 
 Guide for SQlite - Java
+
+(Working One)
+https://hacksmile.com/how-to-connect-any-java-program-to-a-database/
+https://www.youtube.com/watch?v=KHTMIkfCKhg
+
+(Tested but not sure what went wrong)
 https://www.sqlitetutorial.net/sqlite-java/
 
+(Not Tested yet)
 https://www.tutorialspoint.com/sqlite/sqlite_java.htm
+
