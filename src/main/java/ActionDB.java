@@ -92,4 +92,24 @@ public class ActionDB {
             }
         }
     }
+
+    // Read from database <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+    protected static void dbUpdateFirstName() {
+        Connection con = DbConnection.connect();
+        PreparedStatement ps = null;
+        try {
+            String sql = "UPDATE user SET firstName = ? WHERE id = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "Carter");
+            ps.setString(2, "1002");
+            ps.executeUpdate();
+
+            Message.msgDBUpdate();
+        } catch (SQLException e) {
+            Message.msgError(e);
+        } finally {
+
+        }
+    }
 }

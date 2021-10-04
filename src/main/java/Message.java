@@ -4,6 +4,18 @@ public class Message {
         System.out.println("----------------------------------");
     }
 
+    public static void msgError(Exception e) {
+        System.out.println(e.toString());
+        System.out.println("----------------------------------");
+    }
+
+    public static void msgBye() {
+        System.out.println("Bye!");
+        System.out.println("----------------------------------");
+    }
+
+    // Database Related
+
     public static void msgConnection() {
         System.out.println("Connected!");
         System.out.println("----------------------------------");
@@ -31,13 +43,8 @@ public class Message {
         System.out.println("----------------------------------");
     }
 
-    public static void msgError(Exception e) {
-        System.out.println(e.toString());
-        System.out.println("----------------------------------");
-    }
-
-    public static void msgBye() {
-        System.out.println("Bye!");
+    public static void msgDBUpdate() {
+        System.out.println("    Data has been updated!");
         System.out.println("----------------------------------");
     }
 }
