@@ -109,7 +109,62 @@ public class ActionDB {
         } catch (SQLException e) {
             Message.msgError(e);
         } finally {
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException e) {
+                Message.msgError(e);
+            }
+        }
+    }
 
+    // Delete row from database
+
+    protected static void dbDeleteRow(String id) {
+        Connection con = DbConnection.connect();
+        PreparedStatement ps = null;
+        try {
+            String sql = "DELETE FROM user WHERE id = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, id);
+            ps.execute();
+            Message.msgDBDelete();
+        } catch (SQLException e) {
+            Message.msgError(e);
+        } finally {
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException e) {
+                Message.msgError(e);
+            }
+        }
+    }
+
+    // Get number of rows from database
+
+    protected static void dbGetNumOfRow(String countOf, String tableName) {
+        Connection con = DbConnection.connect();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT count(" + countOf + ") FROM " + tableName;
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            int size = rs.getInt(1);
+            Message.msgDBNumOfRow(size);
+
+        } catch (SQLException e) {
+            Message.msgError(e);
+        } finally {
+            try {
+                rs.close();
+                ps.close();
+                con.close();
+            } catch (SQLException e) {
+                Message.msgError(e);
+            }
         }
     }
 }
