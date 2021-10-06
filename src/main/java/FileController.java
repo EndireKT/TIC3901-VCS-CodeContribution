@@ -33,4 +33,9 @@ public class FileController {
         }
     }
 
+    public static void ReadFile() {
+        String FileName = GetFileName();
+        File newFile = OpenFile(FileName);
+        PrintFile(newFile);
+    }
 }
