@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class FileController {
@@ -18,6 +19,18 @@ public class FileController {
             System.out.println("File not found");
         }
         return newFile;
+    }
+
+    public static void PrintFile(File pFile) {
+        Scanner s;
+        try {
+            s = new Scanner(pFile);
+            while (s.hasNext()) {
+                System.out.println(s.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
     }
 
 }
