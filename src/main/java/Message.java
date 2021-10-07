@@ -33,7 +33,7 @@ public class Message {
     }
 
     // Database Related
-
+/*
     public static void msgConnection() {
         System.out.println("Connected!");
         System.out.println("----------------------------------");
@@ -60,7 +60,7 @@ public class Message {
         System.out.println("    result: " + result);
         System.out.println("----------------------------------");
     }
-
+*/
     public static void msgDBUpdate() {
         System.out.println("    Data has been updated!");
         System.out.println("----------------------------------");
@@ -74,5 +74,15 @@ public class Message {
     public static void msgDBNumOfRow(int num) {
         System.out.println("    Row Count: " + num);
         System.out.println("----------------------------------");
+    }
+
+    public static void msgError(Exception e) {
+        System.out.println(e.toString());
+        System.out.println("_________________________________");
+    }
+
+    public static void msgBye() {
+        System.out.println("Bye!");
+        System.out.println("_________________________________");
     }
 }
