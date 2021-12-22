@@ -8,6 +8,7 @@ import ui.Ui;
 import user.User;
 import user.UserManagement;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -20,6 +21,9 @@ public class ContributionChecker {
     private UserManagement userManagement;
     private Ui ui;
     private Storage storage;
+
+    private Process process;
+    private ArrayList<String> infoFromGitBlame = null;
 
     private Scanner inputScanner;
     private Map<String, User> users; // todo maybe this shouldnt be here
@@ -47,33 +51,31 @@ public class ContributionChecker {
 
     public void run() {
 
-        Process process = null;
+        process = null;
 
-        callCommandPrompt_GitBlame(process);
-        callParser_ReadandParseProcess(process);
+        callCommandPrompt_GitBlame();
+        callParser_ReadAndParseProcess();
         callUserManagement_doSomething();
         callStorage_doSomething();
         callUi_getContributionReport();
     }
 
-    private Process callCommandPrompt_GitBlame(Process process){
+    private void callCommandPrompt_GitBlame(){
         try {
             process = commandPrompt.gitBlame(fileToBeChecked.getDrive(), fileToBeChecked.getPath(), fileToBeChecked.getName());
+            System.out.println("Command Prompt Git Blame complete\n");
         } catch (Exception e){
             // todo improve error handling later
             System.out.println("Command Prompt has error");
             System.out.println("replace this line with something more useful later");
             e.printStackTrace();
         }
-
-        return process;
     }
 
-    private void callParser_ReadandParseProcess(Process process){
+    private void callParser_ReadAndParseProcess(){
         try {
-            parser.readAndParseLine(process);
-            int exitCode = process.waitFor();
-            System.out.println("\nExited with error code : " + exitCode);
+            infoFromGitBlame = parser.readAndParseLine(process);
+            System.out.println("Parser complete\n");
         } catch (Exception e){
             // todo improve error handling later
             System.out.println("Parser has error");

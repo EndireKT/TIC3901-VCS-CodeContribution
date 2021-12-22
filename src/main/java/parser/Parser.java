@@ -5,12 +5,16 @@ import user.UserManagement;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Parser {
 
     // todo some private variables
+
     private BufferedReader reader;
+    private InputStreamReader inputStreamReader;
+
     private UserManagement userManagement;
     private Map<String, User> users; // todo maybe this shouldnt be here
 
@@ -34,65 +38,50 @@ public class Parser {
 
     }
 
-    public void readAndParseLine(Process process){
-        reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+    public ArrayList<String> readAndParseLine(Process process){
+        inputStreamReader = new InputStreamReader(process.getInputStream());
+        reader = new BufferedReader(inputStreamReader);
+
+        ArrayList<String> arrayList = new ArrayList<>();
 
         boolean hasLine = true;
-
 
         try {
             while (hasLine) {
                 String line = reader.readLine();
-                if (line.isEmpty()) {
+                if (line == null) {
                     hasLine = false;
                     continue;
                 }
-                parseLine(line);
+
+                String extractedInfo = parseLine(line);
+                if (!extractedInfo.isEmpty()){
+                    arrayList.add(extractedInfo);
+                }
             }
         } catch (Exception e){
             e.printStackTrace();
+        } finally {
+            return arrayList;
         }
     }
 
-    public void parseLine(String line) {
-        String[] parts = line.split(" ");
-        if (!isCommitted(parts[0])){
-            return;
-        }
-        String id = parts[1].substring(1).trim();
-        String lineNo;
-        boolean isEmpty = isEmptyLine(parts[parts.length - 1]);
-        int charCount = 0;
-        if (!isEmpty) {
-            lineNo = parts[parts.length - 2].substring(0, 1);
-            charCount = parts[parts.length - 1].length();
-        } else {
-            lineNo = parts[parts.length - 1].substring(0, 1);
-        }
-        userManagement.addContribution(id, Integer.parseInt(lineNo), charCount);
-    }
+    public String parseLine(String line) {
 
-    public boolean isCommitted(String part) {
-        try {
-            if (Integer.parseInt(part) == 0){
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            return true;
-        }
-        return true;
-    }
+        String[] parts = line.replaceAll("(^\\s+|\\s+$)", "").split("\\s+");
+        int numOfParts = parts.length;
 
-    public boolean isEmptyLine(String line) {
-        try {
-            Integer.parseInt(Character.toString(line.charAt(0)));
-        } catch (NumberFormatException e) {
-            return false;
+        if (numOfParts != 7){
+            return "";
         }
-        Character check = line.charAt(1);
-        if (check.equals(')')) {
-            return true;
-        }
-        return false;
+
+        String userId = parts[1].substring(1);
+        String lineNo = parts[numOfParts-2].substring(0,1);
+        String lineContent = parts[numOfParts-1];
+
+        return userId + " " + lineNo + " " + lineContent;
+
+        // this shouldnt be here.
+        //userManagement.addContribution(id, Integer.parseInt(lineNo), charCount);
     }
 }

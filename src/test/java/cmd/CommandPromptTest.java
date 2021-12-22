@@ -18,11 +18,10 @@ class CommandPromptTest {
         Process process = null;
         try{
             process = commandPrompt.gitBlame(drive,path,name);
+            assertEquals(0, process.waitFor());
         } catch (Exception e){
             e.printStackTrace();
         }
-
-        assertEquals(0, process.exitValue());
     }
 
     @Test
@@ -30,15 +29,14 @@ class CommandPromptTest {
         CommandPrompt commandPrompt = new CommandPrompt();
         String drive = "/c";
         String path = "D:\\My Files\\School Documents\\Repository\\TestBlame";
-        String name = "FileDoesNotExist.md";
+        String name = "InvalidFileName.md";
 
         Process process = null;
         try{
             process = commandPrompt.gitBlame(drive,path,name);
+            assertNotEquals(0, process.waitFor());
         } catch (Exception e){
             e.printStackTrace();
         }
-
-        assertNotEquals(0, process.exitValue());
     }
 }
