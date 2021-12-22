@@ -1,11 +1,14 @@
 package user;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class UserManagement {
     // todo some private variables
     private Map<String, User> users; // todo this feels weird
+
+    public UserManagement(){
+
+    }
 
     public UserManagement(Map<String, User>  users) {
         // todo

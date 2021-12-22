@@ -14,6 +14,10 @@ public class Parser {
     private UserManagement userManagement;
     private Map<String, User> users; // todo maybe this shouldnt be here
 
+    public Parser(){
+
+    }
+
     public Parser(Map<String, User>  myUsers){
         // todo
         this.users = myUsers;
@@ -35,10 +39,11 @@ public class Parser {
 
         boolean hasLine = true;
 
+
         try {
             while (hasLine) {
                 String line = reader.readLine();
-                if (line == null) {
+                if (line.isEmpty()) {
                     hasLine = false;
                     continue;
                 }
