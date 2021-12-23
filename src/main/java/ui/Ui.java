@@ -30,9 +30,11 @@ public class Ui {
 
     }
 
-    // todo print useful info
 
+    // todo print useful info
     public void getContributionReport() {
+
+        /*
         if (users.isEmpty()) {
             return;
         }
@@ -58,5 +60,7 @@ public class Ui {
                 + " with " + mostLineUser.linesContributed.size() + " lines contributed.");
         System.out.println("The user who contributed the most characters is " + mostCharUser.id
                 + " with " + mostCharUser.totalChar + " characters contributed.");
+
+        */
     }
 }

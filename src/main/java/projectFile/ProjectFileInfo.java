@@ -6,10 +6,13 @@ public class ProjectFileInfo {
 
     // todo some private variables
     private ContributionChecker contributionChecker;
+    private FileToBeChecked fileToBeChecked;
 
     public ProjectFileInfo(){
         // todo
-        contributionChecker = new ContributionChecker();
+        // dummy fileToBeChecked
+        fileToBeChecked = new FileToBeChecked();
+        contributionChecker = new ContributionChecker(fileToBeChecked);
     }
 
     public void run(){
@@ -18,7 +21,6 @@ public class ProjectFileInfo {
         // todo run ContributionChecker on each myFile
         contributionChecker.run();
     }
-
 
     public static void checkContribution(){
 
