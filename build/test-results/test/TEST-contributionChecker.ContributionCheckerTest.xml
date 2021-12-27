@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="contributionChecker.ContributionCheckerTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2021-12-22T17:03:34" hostname="DESKTOP-O9535UC" time="0.123">
+<testsuite name="contributionChecker.ContributionCheckerTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2021-12-27T13:25:46" hostname="DESKTOP-O9535UC" time="0.144">
   <properties/>
-  <testcase name="run_unitrun()" classname="contributionChecker.ContributionCheckerTest" time="0.123">
+  <testcase name="run_unitrun()" classname="contributionChecker.ContributionCheckerTest" time="0.144">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
-	at ui.Ui.getContributionReport(Ui.java:36)
-	at contributionChecker.ContributionChecker.callUi_getContributionReport(ContributionChecker.java:100)
-	at contributionChecker.ContributionChecker.run(ContributionChecker.java:61)
+	at projectFile.FileToBeChecked.addFileLines(FileToBeChecked.java:23)
+	at contributionChecker.ContributionChecker.callFileLine_AddLines(ContributionChecker.java:69)
+	at contributionChecker.ContributionChecker.run(ContributionChecker.java:38)
 	at contributionChecker.ContributionCheckerTest.run_unitrun(ContributionCheckerTest.java:14)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
