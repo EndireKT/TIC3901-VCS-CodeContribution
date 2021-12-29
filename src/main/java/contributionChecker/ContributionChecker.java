@@ -3,6 +3,7 @@ package contributionChecker;
 import parser.Parser;
 import ui.Ui;
 import user.User;
+import user.UserManagement;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,10 +16,14 @@ public class ContributionChecker {
     private Parser parser;
     private Ui ui;
     private Map<String, User> users; // todo maybe this shouldnt be here
+    private UserManagement users2;
 
     public ContributionChecker() {
         // todo
         users = new HashMap<>();
+
+        //additional
+        users2 = new UserManagement(users);
 
         pBuilder = new ProcessBuilder();
         inputScanner = new Scanner(System.in);
@@ -30,9 +35,10 @@ public class ContributionChecker {
 
         try {
             // todo DUNNO HOW TO DO THIS PART X.X
-            pBuilder.command("cmd.exe", "cd D:/My Files/School Documents/Repository/TestBlame", "D:" , "git blame README.md");
+            pBuilder.command("cmd.exe", "/C" ,"cd C:\\Users\\Kcube\\Documents\\GIT\\TestBlame && git blame README.md");
             Process process = pBuilder.start();
 
+            // read contents of file
             parser.readAndParseLine(process);
 
             int exitCode = process.waitFor();

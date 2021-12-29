@@ -1,6 +1,8 @@
 package ui;
 
 import fileIdentifier.FileIdentifier;
+import storage.Storage;
+import storage.WriteToFile;
 import user.User;
 
 import java.util.Map;
@@ -33,9 +35,11 @@ public class Ui {
     // todo print useful info
 
     public void getContributionReport() {
+        String text;
         if (users.isEmpty()) {
             return;
         }
+        WriteToFile.initiateWrite();
         User mostLineUser = null;
         User mostCharUser = null;
         for (Map.Entry<String,User> entry : users.entrySet()) {
@@ -53,10 +57,19 @@ public class Ui {
             System.out.println("User " + user.id + " has contributed line numbers: " +
                     user.linesContributed + " and a total number of " + user.totalChar +
                     " characters to the file.");
+            WriteToFile.UserWrite(user.id, user.linesContributed, user.totalChar);
         }
-        System.out.println("The user who contributed the most lines is " + mostLineUser.id
-                + " with " + mostLineUser.linesContributed.size() + " lines contributed.");
-        System.out.println("The user who contributed the most characters is " + mostCharUser.id
-                + " with " + mostCharUser.totalChar + " characters contributed.");
+        text = "The user who contributed the most lines is " + mostLineUser.id
+                + " with " + mostLineUser.linesContributed.size() + " lines contributed.";
+        System.out.println(text);
+//        System.out.println("The user who contributed the most lines is " + mostLineUser.id
+//                + " with " + mostLineUser.linesContributed.size() + " lines contributed.");
+        WriteToFile.StatsWrite(text);
+        text = "The user who contributed the most characters is " + mostCharUser.id
+                + " with " + mostCharUser.totalChar + " characters contributed.";
+//        System.out.println("The user who contributed the most characters is " + mostCharUser.id
+//                + " with " + mostCharUser.totalChar + " characters contributed.");
+        System.out.println(text);
+        WriteToFile.StatsWrite(text);
     }
 }
