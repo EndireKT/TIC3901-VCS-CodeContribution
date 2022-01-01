@@ -1,17 +1,17 @@
-import projectFile.ProjectFileInfo;
+import projectFiles.Folder;
 import storage.Storage;
 import ui.Ui;
 
 public class ContributionAnalyzer {
 
     // todo some private variables
-    private ProjectFileInfo projectFileInfo;
+    private Folder folder;
     private Ui ui;
     private Storage storage;
 
     public ContributionAnalyzer(){
         // todo
-        projectFileInfo = new ProjectFileInfo();
+        folder = new Folder();
         storage = new Storage();
         ui = new Ui();
     }
@@ -22,10 +22,10 @@ public class ContributionAnalyzer {
         storage.run();
 
         // todo call Ui
-        ui.run();
+        String projectDirectory = ui.getProjectPath();
 
         // todo pass storage stuffs to ProjectFileInfo
-        projectFileInfo.run();
+        folder.run(projectDirectory);
     }
 
     public static void main (String[] args){

@@ -2,7 +2,7 @@ package contributionChecker;
 
 import cmd.CommandPrompt;
 import parser.Parser;
-import projectFile.FileToBeChecked;
+import projectFiles.FileInfo;
 import storage.Storage;
 import ui.Ui;
 import user.UserManagement;
@@ -10,7 +10,7 @@ import user.UserManagement;
 import java.util.ArrayList;
 
 public class ContributionChecker {
-    private FileToBeChecked fileToBeChecked;
+    private FileInfo fileInfo;
     private CommandPrompt commandPrompt;
     private Parser parser;
     private UserManagement userManagement;
@@ -20,8 +20,8 @@ public class ContributionChecker {
     private Process process;
     private ArrayList<String> infoFromGitBlame = null;
 
-    public ContributionChecker(FileToBeChecked fileToBeChecked) {
-        this.fileToBeChecked = fileToBeChecked;
+    public ContributionChecker(FileInfo fileInfo) {
+        this.fileInfo = fileInfo;
 
         commandPrompt = new CommandPrompt();
         parser = new Parser();
@@ -35,7 +35,10 @@ public class ContributionChecker {
 
         callCommandPrompt_GitBlame();
         callParser_ReadAndParseProcess();
-        callFileLine_AddLines();
+
+        // todo add the data to who and what?
+        callFileInfo_AddLines();
+
         callUserManagement_addUser();
         callStorage_doSomething();
         callUi_getContributionReport();
@@ -43,7 +46,8 @@ public class ContributionChecker {
 
     private void callCommandPrompt_GitBlame() {
         try {
-            process = commandPrompt.gitBlame(fileToBeChecked.getDrive(), fileToBeChecked.getPath(), fileToBeChecked.getName());
+
+            process = commandPrompt.gitBlame(fileInfo.getDrive(), fileInfo.getPath(), fileInfo.getName());
             System.out.println("Command Prompt Git Blame complete\n");
         } catch (Exception e) {
             // todo improve error handling later
@@ -65,8 +69,8 @@ public class ContributionChecker {
         }
     }
 
-    private void callFileLine_AddLines(){
-        fileToBeChecked.addFileLines(infoFromGitBlame);
+    private void callFileInfo_AddLines(){
+        //fileInfo.addFileLines(infoFromGitBlame);
     }
 
     private void callUserManagement_addUser() {

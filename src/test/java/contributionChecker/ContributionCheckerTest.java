@@ -1,9 +1,6 @@
 package contributionChecker;
 
 import org.junit.jupiter.api.Test;
-import projectFile.FileToBeChecked;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ContributionCheckerTest {
 
