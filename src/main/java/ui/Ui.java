@@ -35,11 +35,13 @@ public class Ui {
 
     // todo print useful info
     public void getContributionReport() {
-
         /*
+
+        String text;
         if (users.isEmpty()) {
             return;
         }
+        WriteToFile.initiateWrite();
         User mostLineUser = null;
         User mostCharUser = null;
         for (Map.Entry<String,User> entry : users.entrySet()) {

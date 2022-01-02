@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class User {
 
     // todo some private variables
-    private final String id;
-    private int totalChar;
-    private ArrayList<Integer> linesContributed;
-    private int noOfLinesContributed;
+    private final String id; // ksw95
+    private int totalChar; // 5 -> 10 -> 15
+    private ArrayList<Integer> linesContributed; // 1 -> 1,3 -> 1,3,5
+    private int noOfLinesContributed; // 1 -> 2 -> 3
 
     public User(String id) {
         this.id = id;

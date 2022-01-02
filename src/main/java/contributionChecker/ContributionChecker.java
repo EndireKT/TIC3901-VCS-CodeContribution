@@ -5,6 +5,7 @@ import parser.Parser;
 import projectFiles.FileInfo;
 import storage.Storage;
 import ui.Ui;
+import user.User;
 import user.UserManagement;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class ContributionChecker {
 
     private Process process;
     private ArrayList<String> infoFromGitBlame = null;
+
 
     public ContributionChecker(FileInfo fileInfo) {
         this.fileInfo = fileInfo;
@@ -35,11 +37,13 @@ public class ContributionChecker {
 
         callCommandPrompt_GitBlame();
         callParser_ReadAndParseProcess();
-
+        // infoFromGitBlame = ksw95 1 AAAAA ksw95 2 BBBBB ...
         // todo add the data to who and what?
         callFileInfo_AddLines();
-
         callUserManagement_addUser();
+
+        // todo contribution check add mostLineContributor mostCharContributor
+
         callStorage_doSomething();
         callUi_getContributionReport();
     }

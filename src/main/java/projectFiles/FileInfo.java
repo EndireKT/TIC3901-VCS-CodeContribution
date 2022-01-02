@@ -9,7 +9,7 @@ public class FileInfo {
 
     private String localPathInCode;
     private String fileName;
-    private Map<String, User> fileContributors;
+    private Map<String, User> fileContributors; // ksw95, LAPTOP-48KPJ1NS\Kcube
     private User mostLineContributor;
     private User mostCharContributor;
 
