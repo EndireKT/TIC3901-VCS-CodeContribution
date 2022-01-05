@@ -1,42 +1,41 @@
 package user;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class UserManagement {
     // todo some private variables
-    private List<User> users;
+    private HashMap<String, User> users;
 
-    public UserManagement() {
-        users = new ArrayList<User>();
+    public UserManagement(HashMap<String, User> contributors)
+    {
+        users = contributors;
     }
 
     public void addUser(ArrayList<String> infoFromGitBlame) {
         for (String str : infoFromGitBlame) {
             String[] info = str.split(" ");
-
+            String userID = info[0];
+            int count = Integer.parseInt(info[2]);
+            int lineNo = Integer.parseInt(info[1]);
             if (isUserExist(info[0])) {
-                // todo do something meaningful here
+                User currentUser = users.get(info[0]);
+                currentUser.newContribution(count, lineNo);
             } else {
-                addUser(info[0]);
+                addUser(userID, count, lineNo);
             }
         }
     }
 
     public boolean isUserExist(String userId) {
-        for (User user : users) {
-            if (user.getId().equals(userId)) {
-                return true;
-            }
-        }
-        return false;
+        boolean isOldUser = users.containsKey(userId);
+        return isOldUser;
     }
 
-    public void addUser(String userId) {
-        users.add(new User(userId));
+
+    public void addUser(String userId, int count, int lineNo) {
+        User newUser = new User(userId, count, lineNo);
     }
 
-    public List<User> getUsers (){
-        return users;
-    }
 }

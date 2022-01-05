@@ -1,21 +1,17 @@
 package projectFiles;
 
+import contributionChecker.ContributionChecker;
 import user.*;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class FileInfo {
 
     private String localPathInCode;
     private String fileName;
-    private Map<String, User> fileContributors; // ksw95, LAPTOP-48KPJ1NS\Kcube
+    private HashMap<String, User> fileContributors; // ksw95, LAPTOP-48KPJ1NS\Kcube
     private User mostLineContributor;
     private User mostCharContributor;
-
-    private String drive;
-    private String path;
-    private String name;
 
     public FileInfo(String pathCode, String file) {
         localPathInCode = pathCode;
@@ -24,22 +20,20 @@ public class FileInfo {
     }
 
     public void updateFileContributions() {
-
+        ContributionChecker checker = new ContributionChecker(this);
+        checker.run();
     }
 
-    public Map<String, User> getFileContributors() {
+    public HashMap<String, User> getFileContributors() {
         return fileContributors;
     }
 
-    public String getDrive() {
-        return drive;
+    public String getLocalPathInCode() {
+        return localPathInCode;
     }
 
-    public String getPath() {
-        return path;
-    }
-
-    public String getName() {
-        return name;
+    public String getFileName() {
+        return fileName;
     }
 }
+

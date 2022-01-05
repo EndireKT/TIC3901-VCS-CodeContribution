@@ -12,6 +12,9 @@ public class User {
 
     public User(String id) {
         this.id = id;
+        totalChar = 0;
+        linesContributed = new ArrayList<>();
+        noOfLinesContributed = 0;
     }
 
     public User(String idName, int count, Integer lineNo) {
@@ -35,5 +38,13 @@ public class User {
 
     public String getId() {
         return id;
+    }
+
+    public int getTotalChar() {
+        return totalChar;
+    }
+
+    public int getNoOfLinesContributed() {
+        return noOfLinesContributed;
     }
 }

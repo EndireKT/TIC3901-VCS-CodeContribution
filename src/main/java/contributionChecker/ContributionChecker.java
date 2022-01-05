@@ -15,8 +15,6 @@ public class ContributionChecker {
     private CommandPrompt commandPrompt;
     private Parser parser;
     private UserManagement userManagement;
-    private Ui ui;
-    private Storage storage;
 
     private Process process;
     private ArrayList<String> infoFromGitBlame = null;
@@ -27,9 +25,7 @@ public class ContributionChecker {
 
         commandPrompt = new CommandPrompt();
         parser = new Parser();
-        userManagement = new UserManagement();
-        ui = new Ui();
-        storage = new Storage();
+        userManagement = new UserManagement(fileInfo.getFileContributors());
     }
 
     public void run() {
@@ -38,20 +34,13 @@ public class ContributionChecker {
         callCommandPrompt_GitBlame();
         callParser_ReadAndParseProcess();
         // infoFromGitBlame = ksw95 1 AAAAA ksw95 2 BBBBB ...
-        // todo add the data to who and what?
-        callFileInfo_AddLines();
         callUserManagement_addUser();
-
-        // todo contribution check add mostLineContributor mostCharContributor
-
-        callStorage_doSomething();
-        callUi_getContributionReport();
     }
 
     private void callCommandPrompt_GitBlame() {
         try {
 
-            process = commandPrompt.gitBlame(fileInfo.getDrive(), fileInfo.getPath(), fileInfo.getName());
+            process = commandPrompt.gitBlame(fileInfo.getLocalPathInCode(), fileInfo.getFileName());
             System.out.println("Command Prompt Git Blame complete\n");
         } catch (Exception e) {
             // todo improve error handling later
@@ -73,22 +62,8 @@ public class ContributionChecker {
         }
     }
 
-    private void callFileInfo_AddLines(){
-        //fileInfo.addFileLines(infoFromGitBlame);
-    }
-
     private void callUserManagement_addUser() {
         userManagement.addUser(infoFromGitBlame);
-        // todo add contribution
     }
 
-    private void callStorage_doSomething() {
-        // todo call Storage to output
-        storage.run();
-    }
-
-    private void callUi_getContributionReport() {
-        // todo call Ui to print useful info
-        ui.getContributionReport();
-    }
 }

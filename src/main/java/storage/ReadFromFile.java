@@ -31,7 +31,7 @@ public class ReadFromFile {
 
     public static void parseText(String userDetails,UserManagement dataBase){
         String[] expected = userDetails.split("\\|");
-        dataBase.addContribution(expected[0],Integer.parseInt(expected[1]), Integer.parseInt(expected[2]));
+        // dataBase.addContribution(expected[0],Integer.parseInt(expected[1]), Integer.parseInt(expected[2]));
     }
 
 }

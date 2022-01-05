@@ -57,6 +57,6 @@ public class Parser {
         String lineContent = parts[numOfParts-1];
         String noOfChar = Integer.toString(lineContent.length());
 
-        return userId + " " + lineNo + " " + lineContent + " " + noOfChar;
+        return userId + " " + lineNo + " " + noOfChar + " " + lineContent;
     }
 }

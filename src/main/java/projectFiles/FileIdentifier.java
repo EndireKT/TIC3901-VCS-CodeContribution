@@ -47,10 +47,4 @@ public class FileIdentifier {
         }
         return null;
     }
-
-    public static void run(){
-
-        // todo identify which Java file to run contribution checker on
-
-    }
 }

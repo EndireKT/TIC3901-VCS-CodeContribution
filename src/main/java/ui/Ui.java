@@ -1,23 +1,10 @@
 package ui;
 
-import projectFiles.FileIdentifier;
-
+import projectFiles.ProjectInfo;
 import java.util.Scanner;
 
 public class Ui {
-    private FileIdentifier fileIdentifier;
     private static Scanner inputScanner = new Scanner(System.in);
-
-    public Ui(){
-    }
-
-
-    public void run(){
-
-        // todo ask user input for folder path
-        // todo return list of java file path
-
-    }
 
     public static String getProjectPath() {
         System.out.println("Enter path to file directory to check for contribution:");
@@ -28,14 +15,22 @@ public class Ui {
     }
 
     public static String getFileName() {
-        System.out.println("Enter java file name in the directiory for checking contribution:");
+        System.out.println("Enter java file name in the directory for checking contribution:");
         String fileName = inputScanner.nextLine().trim();
         return fileName;
     }
 
+    public static void main() {
+
+        String localPath = getProjectPath();
+        ProjectInfo newProject = ProjectInfo.getProjectInfo(localPath);
+
+    }
+
+    /*
     // todo print useful info
     public void getContributionReport() {
-        /*
+
 
         String text;
         if (users.isEmpty()) {
@@ -67,6 +62,7 @@ public class Ui {
         System.out.println("The user who contributed the most characters is " + mostCharUser.id
                 + " with " + mostCharUser.totalChar + " characters contributed.");
 
-        */
+
     }
+    */
 }

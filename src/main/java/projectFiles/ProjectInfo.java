@@ -1,45 +1,50 @@
 package projectFiles;
 
-import cmd.CommandPrompt;
-import contributionChecker.ContributionChecker;
-import ui.Ui;
+import user.User;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class ProjectInfo {
-    /*
-    String currentLocalPath;
-    String remoteRepoGitURL;
-    // ArrayList<FolderInfo> projectFolders;
+
+    private String currentLocalPath;
+    private String remoteRepoGitURL;
     ArrayList<FileInfo> javaFiles;
-    private Map<String, User> projectContributors;
+    private HashMap<String, User> projectContributors;
     User mostLineContributor;
     User mostCharContributor;
 
-    // todo some private variables
-    //private ContributionChecker contributionChecker;
+    public static ProjectInfo getProjectInfo(String localPath) {
 
-    public ProjectInfo(){
-
-        // set path info
-        currentLocalPath = Ui.getProjectPath();
-        String pathCode = getLocalPathInCode();
-        remoteRepoGitURL = CommandPrompt.getGitRemoteProjectURL(pathCode);
-
-        // get java files using path
-        javaFiles = FileIdentifier.getJavaFilesFromPath(pathCode);
-
-        // update projectContributors, mostLineContributor & mostCharContributor
-        // 1. Loop through each java file and calls ContributionChecker for each file
-        // 2. When each file get updated by ContributionChecker,
-        // this Project File gets updated as well
-        updateProjectContributions();
+        String pathCode = getLocalPathInCode(localPath);
+        ProjectInfo newProject = new ProjectInfo(localPath, pathCode);
+        if (newProject.hasRemoteGitRepo() == false) {
+            System.out.println("Can't check contribution, project does not exist on Github.");
+            return null;
+        }
+        if (newProject.hasJavaFiles() == false) {
+            System.out.println("Project has no java files to check for contribution.");
+            return null;
+        }
+        newProject.updateProjectContributions();
+        return newProject;
     }
 
-    public String getLocalPathInCode() {
-        String[] pathParts = currentLocalPath.split("\\\\");
+    public ProjectInfo(String localPath, String pathCode){
+        // Set path info
+        currentLocalPath = localPath;
+        remoteRepoGitURL = getGitRemoteProjectURL(pathCode);
+        this.addJavaFilesToProjectInfo(pathCode);
+    }
+
+
+    // Takes the local path and parses it
+    // into a string where path can be recognized by the code
+    // e.g. return String will be " C:\\user1\\folder\\file "
+    private static String getLocalPathInCode(String localPath) {
+        String[] pathParts = localPath.split("\\\\");
         String pathCode = pathParts[0];
         for (int i = 1; i < pathParts.length; i++) {
             pathCode = pathCode + "\\\\" + pathParts[i];
@@ -47,18 +52,66 @@ public class ProjectInfo {
         return pathCode;
     }
 
+    // Get the Remote Repo URL/Path of the project
+    private String getGitRemoteProjectURL(String pathCode) {
+        ProcessBuilder pBuilder = new ProcessBuilder();
+        String commandInput = "cd " + pathCode + " && git config --get remote.origin.url";
+        pBuilder.command("cmd.exe", "/c", commandInput);
+        try {
+            Process process = pBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String remoteURL = reader.readLine();
+            int exitCode = process.waitFor();
+            System.out.println("\nExited with error code : " + exitCode);
+            return remoteURL;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // Check whether Project has a Git remote repo
+    private boolean hasRemoteGitRepo() {
+        if (remoteRepoGitURL == null) {
+            return false;
+        }
+        return true;
+    }
+
+    // Calls fileIdentifier to get all the fileInfo of the Java files inside the Project
+    private void addJavaFilesToProjectInfo(String pathCode) {
+        javaFiles = FileIdentifier.getJavaFilesFromPath(pathCode);
+    }
+
+    // Check whether Project has any Java Files
+    private boolean hasJavaFiles() {
+        if (javaFiles == null) {
+            return false;
+        }
+        return true;
+    }
+
+    // update projectContributors, mostLineContributor & mostCharContributor
+    // 1. Loop through each java file and calls ContributionChecker for each file
+    // 2. When each file get updated by ContributionChecker,
+    // this Project File gets updated as well
     public void updateProjectContributions() {
         projectContributors = new HashMap<>();
         for (int i = 0; i < javaFiles.size(); i++) {
             FileInfo file = javaFiles.get(i);
             file.updateFileContributions();
-            Map<String, User> fileUsers = file.getFileContributors();
-            addContributionsFromFile(fileUsers);
+            HashMap<String, User> fileUsers = file.getFileContributors();
+            this.addContributionsFromFile(fileUsers);
         }
     }
 
-    private void addContributionsFromFile(Map<String, User> fileContributors) {
-        for (Map.Entry<String, User> entry : fileContributors.entrySet()) {
+    // Checks HashMap input against instance of HashMap in ProjectInfo object
+    // if user exist in both HashMap, update the contributions in the ProjectInfo HashMap
+    // with the input HashMap
+    // if user does not exist in ProjectInfo HashMap
+    // add new user with contribution to ProjectInfo HashMap
+    private void addContributionsFromFile(HashMap<String, User> fileContributors) {
+        for (HashMap.Entry<String, User> entry : fileContributors.entrySet()) {
             String fileContributor = entry.getKey();
             User fileContributorInfo = entry.getValue();
             boolean isNewUser = !projectContributors.containsKey(fileContributor);
@@ -66,23 +119,11 @@ public class ProjectInfo {
                 projectContributors.put(fileContributor, fileContributorInfo);
             } else {
                 User projectContributor = projectContributors.get(fileContributor);
-                int newCharContribution = fileContributorInfo.totalChar;
-                int newNoLinesContribution = fileContributorInfo.noOfLinesContributed;
+                int newCharContribution = fileContributorInfo.getTotalChar();
+                int newNoLinesContribution = fileContributorInfo.getNoOfLinesContributed();
                 projectContributor.updateContribution(newCharContribution, newNoLinesContribution);
             }
         }
     }
 
-    public void run(){
-        // todo create myFile objects
-        contributionChecker = new ContributionChecker();
-        // todo run ContributionChecker on each myFile
-        contributionChecker.run();
-    }
-
-
-    public static void checkContribution(){
-
-    }
-     */
 }
