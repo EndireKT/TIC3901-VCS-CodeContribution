@@ -22,7 +22,6 @@ public class ContributionChecker {
 
     public ContributionChecker(FileInfo fileInfo) {
         this.fileInfo = fileInfo;
-
         commandPrompt = new CommandPrompt();
         parser = new Parser();
         userManagement = new UserManagement(fileInfo.getFileContributors());

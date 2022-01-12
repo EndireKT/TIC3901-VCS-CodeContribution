@@ -20,7 +20,7 @@ public class Ui {
         return fileName;
     }
 
-    public static void main() {
+    public static void main(String args[]) {
 
         String localPath = getProjectPath();
         ProjectInfo newProject = ProjectInfo.getProjectInfo(localPath);

@@ -1,5 +1,7 @@
 package projectFiles;
 
+import storage.ReadFromFile;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ public class FileIdentifier {
             String fileName = allFiles.get(i);
             if (fileName.endsWith(".java")) {
                 FileInfo newFile = new FileInfo(pathCode, fileName);
+                ReadFromFile.initiateRead(newFile);
                 javaFiles.add(newFile);
             }
         }

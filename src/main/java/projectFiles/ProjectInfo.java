@@ -1,6 +1,8 @@
 package projectFiles;
 
+import storage.WriteToFile;
 import user.User;
+import user.UserManagement;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -13,12 +15,21 @@ public class ProjectInfo {
     private String remoteRepoGitURL;
     ArrayList<FileInfo> javaFiles;
     private HashMap<String, User> projectContributors;
+//    private UserManagement projectContributors;
     User mostLineContributor;
     User mostCharContributor;
+
+    public ProjectInfo(String localPath, String pathCode){
+        // Set path info
+        currentLocalPath = localPath;
+        remoteRepoGitURL = getGitRemoteProjectURL(pathCode);
+        this.addJavaFilesToProjectInfo(pathCode);
+    }
 
     public static ProjectInfo getProjectInfo(String localPath) {
 
         String pathCode = getLocalPathInCode(localPath);
+        //why create a new instance of projectInfo here
         ProjectInfo newProject = new ProjectInfo(localPath, pathCode);
         if (newProject.hasRemoteGitRepo() == false) {
             System.out.println("Can't check contribution, project does not exist on Github.");
@@ -32,12 +43,7 @@ public class ProjectInfo {
         return newProject;
     }
 
-    public ProjectInfo(String localPath, String pathCode){
-        // Set path info
-        currentLocalPath = localPath;
-        remoteRepoGitURL = getGitRemoteProjectURL(pathCode);
-        this.addJavaFilesToProjectInfo(pathCode);
-    }
+
 
 
     // Takes the local path and parses it
@@ -101,7 +107,11 @@ public class ProjectInfo {
             FileInfo file = javaFiles.get(i);
             file.updateFileContributions();
             HashMap<String, User> fileUsers = file.getFileContributors();
-            this.addContributionsFromFile(fileUsers);
+            if (!fileUsers.isEmpty()){
+                file.getContributionReport();
+                WriteToFile.initiateWrite(file);
+                this.addContributionsFromFile(fileUsers);
+            }
         }
     }
 
@@ -115,10 +125,12 @@ public class ProjectInfo {
             String fileContributor = entry.getKey();
             User fileContributorInfo = entry.getValue();
             boolean isNewUser = !projectContributors.containsKey(fileContributor);
+//            boolean isNewUser = !projectContributors.isUserExist(fileContributor);
             if (isNewUser) {
                 projectContributors.put(fileContributor, fileContributorInfo);
             } else {
                 User projectContributor = projectContributors.get(fileContributor);
+//                User projectContributor = projectContributors.getUser(fileContributor);
                 int newCharContribution = fileContributorInfo.getTotalChar();
                 int newNoLinesContribution = fileContributorInfo.getNoOfLinesContributed();
                 projectContributor.updateContribution(newCharContribution, newNoLinesContribution);

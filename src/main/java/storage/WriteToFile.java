@@ -4,43 +4,55 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
+import projectFiles.FileInfo;
 
 import user.User;
 
 public class WriteToFile {
 
-    private static File f = Storage.getFile();
+    private static File f = null;
+    private static FileWriter fw = null;
 
-    public static void initiateWrite(){
+    public static void initiateWrite(FileInfo file){
         try{
+            f = Storage.getFile(file.getLocalPathInCode(),file.getFileName());
             Storage.clearContents();
-            FileWriter fw = new FileWriter(f.getAbsolutePath(),true);
-            fw.write("User | Total Lines Contributed | Total Characters Contributed"
-                    + System.lineSeparator());
+            fw = new FileWriter(f.getAbsolutePath(),true);
+            fw.write("User | Total Characters Contributed | Total Lines Contributed | List of Lines " +
+                    "Contributed" + System.lineSeparator());
+            writeUsers(file.getFileContributors());
+            writeStats(file.getMostCharContributor(), file.getMostLineContributor());
             fw.close();
         } catch (IOException e) {
-            System.out.println("No Existing File. New file will be created");
+            System.out.println("Unable to find file. New file will be attempted to be created at" +
+                    file.getLocalPathInCode());
         }
     }
 
-    public static void UserWrite(String userID, ArrayList<Integer> linesContributed, Integer userChar){
+    public static void writeUsers(HashMap<String, User> fileContributors){
         try{
-            FileWriter fw = new FileWriter(f.getAbsolutePath(),true);
-            fw.write(userID + " | " + linesContributed + " | " + userChar
-                    + System.lineSeparator());
-            fw.close();
+            for (HashMap.Entry<String,User> entry : fileContributors.entrySet()){
+                User user = entry.getValue();
+                fw.write(user.getId() + " | " + user.getTotalChar() + " | "
+                        + user.getNoOfLinesContributed() + " | " + user.getLinesContributed()
+                        + System.lineSeparator());
+            }
         } catch (IOException e) {
             System.out.println("No Existing File. New file will be created");
         }
 
     }
 
-    public static void StatsWrite(String text){
+    public static void writeStats(User mostChar, User mostLines){
         try{
-            FileWriter fw = new FileWriter(f.getAbsolutePath(),true);
             fw.write(System.lineSeparator());
-            fw.write(text);
+            fw.write("The user who contributed the most characters is " + mostChar.getId()
+                    + " with " + mostChar.getTotalChar() + " characters contributed.");
+            fw.write(System.lineSeparator());
+            fw.write("The user who contributed the most lines is " + mostLines.getId()
+                    + " with " + mostLines.getNoOfLinesContributed() + " lines contributed.");
             fw.close();
         } catch (IOException e) {
             System.out.println("No Existing File. New file will be created");

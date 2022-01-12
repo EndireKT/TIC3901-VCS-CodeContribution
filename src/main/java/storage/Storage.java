@@ -20,8 +20,9 @@ public class Storage {
 
     }
 
-    public static File getFile(){
-        String home = System.getProperty("user.home") + "\\Documents\\TIC3901.txt";
+    public static File getFile(String path, String fileName){
+        fileName = fileName.replaceAll(".java", "");
+        String home = path + "\\\\" + fileName + ".txt";
         f = null;
         try {
             f = new File(home);

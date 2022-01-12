@@ -36,6 +36,11 @@ public class UserManagement {
 
     public void addUser(String userId, int count, int lineNo) {
         User newUser = new User(userId, count, lineNo);
+        users.put(userId, newUser);
+    }
+
+    public User getUser(String user){
+        return users.get(user);
     }
 
 }

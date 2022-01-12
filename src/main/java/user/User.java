@@ -36,6 +36,12 @@ public class User {
         noOfLinesContributed = noOfLinesContributed + addLines;
     }
 
+    // temporary function
+    public void populateLines(int noOfLines){
+        this.noOfLinesContributed = noOfLines;
+        linesContributed.clear();
+    }
+
     public String getId() {
         return id;
     }
@@ -47,4 +53,6 @@ public class User {
     public int getNoOfLinesContributed() {
         return noOfLinesContributed;
     }
+
+    public ArrayList<Integer>getLinesContributed(){ return linesContributed;}
 }
