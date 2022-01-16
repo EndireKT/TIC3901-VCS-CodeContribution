@@ -19,28 +19,27 @@ public class ProjectInfo {
     User mostLineContributor;
     User mostCharContributor;
 
-    public ProjectInfo(String localPath, String pathCode){
+    public ProjectInfo(String localPath){
         // Set path info
         currentLocalPath = localPath;
-        remoteRepoGitURL = getGitRemoteProjectURL(pathCode);
-        this.addJavaFilesToProjectInfo(pathCode);
     }
 
-    public static ProjectInfo getProjectInfo(String localPath) {
+    public ProjectInfo getProjectInfo() {
 
-        String pathCode = getLocalPathInCode(localPath);
-        //why create a new instance of projectInfo here
-        ProjectInfo newProject = new ProjectInfo(localPath, pathCode);
-        if (newProject.hasRemoteGitRepo() == false) {
+        String pathCode = getLocalPathInCode(currentLocalPath);
+        remoteRepoGitURL = getGitRemoteProjectURL(pathCode);
+        this.addJavaFilesToProjectInfo(pathCode);
+
+        if (this.hasRemoteGitRepo() == false) {
             System.out.println("Can't check contribution, project does not exist on Github.");
             return null;
         }
-        if (newProject.hasJavaFiles() == false) {
+        if (this.hasJavaFiles() == false) {
             System.out.println("Project has no java files to check for contribution.");
             return null;
         }
-        newProject.updateProjectContributions();
-        return newProject;
+        this.updateProjectContributions();
+        return this;
     }
 
 

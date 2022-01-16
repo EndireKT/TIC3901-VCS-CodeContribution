@@ -23,7 +23,8 @@ public class Ui {
     public static void main(String args[]) {
 
         String localPath = getProjectPath();
-        ProjectInfo newProject = ProjectInfo.getProjectInfo(localPath);
+        ProjectInfo newProject = new ProjectInfo(localPath);
+        newProject.getProjectInfo();
 
     }
 

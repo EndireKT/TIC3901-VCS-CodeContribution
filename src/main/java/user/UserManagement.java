@@ -17,8 +17,15 @@ public class UserManagement {
         for (String str : infoFromGitBlame) {
             String[] info = str.split(" ");
             String userID = info[0];
-            int count = Integer.parseInt(info[2]);
-            int lineNo = Integer.parseInt(info[1]);
+            int count = 0;
+            int lineNo = 0;
+            try {
+                count = Integer.parseInt(info[2]);
+                lineNo = Integer.parseInt(info[1]);
+            } catch (NumberFormatException e) {
+                System.out.println("The info string '" + str + "' is invalid");
+                continue;
+            }
             if (isUserExist(info[0])) {
                 User currentUser = users.get(info[0]);
                 currentUser.newContribution(count, lineNo);

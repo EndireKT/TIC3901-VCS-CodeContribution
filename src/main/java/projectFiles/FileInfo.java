@@ -25,17 +25,26 @@ public class FileInfo {
         if (fileContributors.isEmpty()) {
             return;
         }
-        for (HashMap.Entry<String,User> entry : fileContributors.entrySet()){
-            User user = entry.getValue();
-            if (mostLineContributor == null) {
-                mostLineContributor = user;
-                mostCharContributor = user;
-            }
-            if (user.getNoOfLinesContributed() > mostLineContributor.getNoOfLinesContributed()) {
-                mostLineContributor = user;
-            }
-            if (user.getTotalChar() > mostCharContributor.getTotalChar()) {
-                mostCharContributor = user;
+        updateMostContributorsOfFile();
+    }
+
+    public void updateMostContributorsOfFile() {
+        for (HashMap.Entry<String, User> entry : fileContributors.entrySet()) {
+            User currentUser = entry.getValue();
+            if (mostCharContributor == null) {
+                mostCharContributor = currentUser;
+                mostLineContributor = currentUser;
+            } else {
+                int noOfLines = currentUser.getNoOfLinesContributed();
+                int noOfChars = currentUser.getTotalChar();
+                int mostLinesContributed = mostLineContributor.getNoOfLinesContributed();
+                int mostCharContributed = mostLineContributor.getTotalChar();
+                if (noOfChars > mostCharContributed) {
+                    mostCharContributor = currentUser;
+                }
+                if (noOfLines > mostLinesContributed) {
+                    mostCharContributor = currentUser;
+                }
             }
         }
     }

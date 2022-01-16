@@ -3,6 +3,7 @@ package parser;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Parser {
 
@@ -19,7 +20,7 @@ public class Parser {
         inputStreamReader = new InputStreamReader(process.getInputStream());
         reader = new BufferedReader(inputStreamReader);
 
-        ArrayList<String> arrayList = new ArrayList<>();
+        ArrayList<String> parsedInfo = new ArrayList<>();
 
         boolean hasLine = true;
 
@@ -31,15 +32,20 @@ public class Parser {
                     continue;
                 }
 
+                if (line.startsWith("00000000")) {
+                    continue;
+                }
+
                 String extractedInfo = parseLine(line);
+
                 if (!extractedInfo.isEmpty()){
-                    arrayList.add(extractedInfo);
+                    parsedInfo.add(extractedInfo);
                 }
             }
         } catch (Exception e){
             e.printStackTrace();
         } finally {
-            return arrayList;
+            return parsedInfo;
         }
     }
 
@@ -48,15 +54,20 @@ public class Parser {
         String[] parts = line.replaceAll("(^\\s+|\\s+$)", "").split("\\s+");
         int numOfParts = parts.length;
 
-        if (numOfParts != 7){
+        if (numOfParts < 7){
             return "";
         }
 
         String userId = parts[1].substring(1);
-        String lineNo = parts[numOfParts-2].substring(0,1);
-        String lineContent = parts[numOfParts-1];
+        String lineNo = parts[5].substring(0, parts[5].length() - 1);
+        String lineContent = parts[6];
+        for (int i = 7; i < numOfParts; i++){
+            lineContent = lineContent + parts[i];
+        }
         String noOfChar = Integer.toString(lineContent.length());
 
-        return userId + " " + lineNo + " " + noOfChar + " " + lineContent;
+        String parseInfo = userId + " " + lineNo + " " + noOfChar + " " + lineContent;
+        System.out.println(parseInfo);
+        return parseInfo;
     }
 }
