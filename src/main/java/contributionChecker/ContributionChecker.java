@@ -1,11 +1,8 @@
 package contributionChecker;
 
-import cmd.CommandPrompt;
+import commandPrompt.CommandPrompt;
 import parser.Parser;
 import projectFiles.FileInfo;
-import storage.Storage;
-import ui.Ui;
-import user.User;
 import user.UserManagement;
 
 import java.util.ArrayList;

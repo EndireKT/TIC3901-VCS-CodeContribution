@@ -1,6 +1,6 @@
 package projectFiles;
 
-import storage.ReadFromFile;
+import storage.ProgressReader;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -19,7 +19,7 @@ public class FileIdentifier {
             String fileName = allFiles.get(i);
             if (fileName.endsWith(".java")) {
                 FileInfo newFile = new FileInfo(pathCode, fileName);
-                ReadFromFile.initiateRead(newFile);
+                ProgressReader.initiateRead(newFile);
                 javaFiles.add(newFile);
             }
         }

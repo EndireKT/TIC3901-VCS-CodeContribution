@@ -10,7 +10,7 @@ import projectFiles.FileInfo;
 
 import user.User;
 
-public class WriteToFile {
+public class ProgressRecorder {
 
     private static File f = null;
     private static FileWriter fw = null;

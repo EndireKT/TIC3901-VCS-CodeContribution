@@ -1,8 +1,7 @@
 package projectFiles;
 
-import storage.WriteToFile;
+import storage.ProgressRecorder;
 import user.User;
-import user.UserManagement;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -108,7 +107,7 @@ public class ProjectInfo {
             HashMap<String, User> fileUsers = file.getFileContributors();
             if (!fileUsers.isEmpty()){
                 file.getContributionReport();
-                WriteToFile.initiateWrite(file);
+                ProgressRecorder.initiateWrite(file);
                 this.addContributionsFromFile(fileUsers);
             }
         }
