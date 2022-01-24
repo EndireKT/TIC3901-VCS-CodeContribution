@@ -22,7 +22,7 @@ public class ProgressRecorder {
             fw = new FileWriter(f.getAbsolutePath(),true);
             fw.write("User | Total Characters Contributed | Total Lines Contributed | List of Lines " +
                     "Contributed" + System.lineSeparator());
-            writeUsers(file.getFileContributors());
+            writeUsers(file.getFileContributors().getUserList());
             writeStats(file.getMostCharContributor(), file.getMostLineContributor());
             fw.close();
         } catch (IOException e) {

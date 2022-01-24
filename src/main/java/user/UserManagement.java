@@ -8,9 +8,13 @@ public class UserManagement {
     // todo some private variables
     private HashMap<String, User> users;
 
-    public UserManagement(HashMap<String, User> contributors)
-    {
-        users = contributors;
+//    public UserManagement(HashMap<String, User> contributors)
+//    {
+//        users = contributors;
+//    }
+
+    public UserManagement(){
+        users = new HashMap<>();
     }
 
     public void addUser(ArrayList<String> infoFromGitBlame) {
@@ -49,5 +53,10 @@ public class UserManagement {
     public User getUser(String user){
         return users.get(user);
     }
+
+    public HashMap<String, User> getUserList(){
+        return users;
+    }
+
 
 }

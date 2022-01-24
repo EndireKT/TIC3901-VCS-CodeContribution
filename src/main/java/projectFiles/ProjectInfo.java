@@ -2,6 +2,7 @@ package projectFiles;
 
 import storage.ProgressRecorder;
 import user.User;
+import user.UserManagement;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -13,8 +14,8 @@ public class ProjectInfo {
     private String currentLocalPath;
     private String remoteRepoGitURL;
     ArrayList<FileInfo> javaFiles;
-    private HashMap<String, User> projectContributors;
-//    private UserManagement projectContributors;
+//    private HashMap<String, User> projectContributors;
+    private UserManagement projectContributors;
     User mostLineContributor;
     User mostCharContributor;
 
@@ -100,11 +101,13 @@ public class ProjectInfo {
     // 2. When each file get updated by ContributionChecker,
     // this Project File gets updated as well
     public void updateProjectContributions() {
-        projectContributors = new HashMap<>();
+//        projectContributors = new HashMap<>();
+        projectContributors = new UserManagement();
         for (int i = 0; i < javaFiles.size(); i++) {
             FileInfo file = javaFiles.get(i);
             file.updateFileContributions();
-            HashMap<String, User> fileUsers = file.getFileContributors();
+//            HashMap<String, User> fileUsers = file.getFileContributors();
+            HashMap<String, User> fileUsers = file.getFileContributors().getUserList();
             if (!fileUsers.isEmpty()){
                 file.getContributionReport();
                 ProgressRecorder.initiateWrite(file);
@@ -122,13 +125,14 @@ public class ProjectInfo {
         for (HashMap.Entry<String, User> entry : fileContributors.entrySet()) {
             String fileContributor = entry.getKey();
             User fileContributorInfo = entry.getValue();
-            boolean isNewUser = !projectContributors.containsKey(fileContributor);
-//            boolean isNewUser = !projectContributors.isUserExist(fileContributor);
+//            boolean isNewUser = !projectContributors.containsKey(fileContributor);
+            boolean isNewUser = !projectContributors.getUserList().containsKey(fileContributor);
             if (isNewUser) {
-                projectContributors.put(fileContributor, fileContributorInfo);
+//                projectContributors.put(fileContributor, fileContributorInfo);
+                projectContributors.getUserList().put(fileContributor, fileContributorInfo);
             } else {
-                User projectContributor = projectContributors.get(fileContributor);
-//                User projectContributor = projectContributors.getUser(fileContributor);
+//                User projectContributor = projectContributors.get(fileContributor);
+                User projectContributor = projectContributors.getUserList().get(fileContributor);
                 int newCharContribution = fileContributorInfo.getTotalChar();
                 int newNoLinesContribution = fileContributorInfo.getNoOfLinesContributed();
                 projectContributor.updateContribution(newCharContribution, newNoLinesContribution);

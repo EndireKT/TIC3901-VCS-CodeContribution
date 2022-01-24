@@ -28,7 +28,7 @@ public class ProgressReader {
                 } else if(userDetails.equals("")){
                     continue;
                 }
-                parseText(userDetails,file.getFileContributors());
+                parseText(userDetails,file.getFileContributors().getUserList());
             }
             currentFile.close();
         } catch (IOException e) {
