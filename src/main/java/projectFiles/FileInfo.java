@@ -1,6 +1,7 @@
 package projectFiles;
 
 import contributionChecker.ContributionChecker;
+import contributionChecker.CommitChecker;
 import user.*;
 
 import java.util.HashMap;
@@ -9,7 +10,8 @@ public class FileInfo {
 
     private String localPathInCode;
     private String fileName;
-//    private HashMap<String, User> fileContributors; // ksw95, LAPTOP-48KPJ1NS\Kcube
+    private String commitID;
+    private boolean isLatestCommit = false;
     private UserManagement fileContributors;
     private User mostLineContributor = null;
     private User mostCharContributor = null;
@@ -17,12 +19,18 @@ public class FileInfo {
     public FileInfo(String pathCode, String file) {
         localPathInCode = pathCode;
         fileName = file;
-//        fileContributors = new HashMap<>();
         fileContributors = new UserManagement();
     }
 
     public void updateFileContributions() {
         ContributionChecker checker = new ContributionChecker(this);
+        String currentCommitID = CommitChecker.obtainCommitId(this);
+        if (!(commitID == null) && commitID.equals(currentCommitID)){
+            isLatestCommit = true;
+            return;
+        } else {
+            commitID = currentCommitID;
+        }
         checker.run();
         if (fileContributors.getUserList().isEmpty()) {
             return;
@@ -51,10 +59,6 @@ public class FileInfo {
         }
     }
 
-//    public HashMap<String, User> getFileContributors() {
-//        return fileContributors;
-//    }
-
     public UserManagement getFileContributors() {
         return fileContributors;
     }
@@ -63,13 +67,19 @@ public class FileInfo {
         return localPathInCode;
     }
 
+    public String getCommitID(){ return commitID;}
+
     public String getFileName() {
         return fileName;
     }
 
+    public void setCommitID(String commitID) { this.commitID = commitID;}
+
     public User getMostLineContributor(){return mostLineContributor;}
 
     public User getMostCharContributor(){return mostCharContributor;}
+
+    public boolean getCommitStatus(){return isLatestCommit;}
 
     public void getContributionReport() {
 

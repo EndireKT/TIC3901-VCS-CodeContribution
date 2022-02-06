@@ -21,4 +21,13 @@ public class CommandPrompt {
         return process;
     }
 
+    public Process gitLog(String pathCode, String fileName) throws IOException {
+
+        String commandInput = "cd " + pathCode + " && git log " + fileName;
+        pBuilder.command("cmd.exe", "/c", commandInput);
+        Process process = pBuilder.start();
+
+        return process;
+    }
+
 }

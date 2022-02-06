@@ -51,7 +51,15 @@ public class Parser {
 
     public String parseLine(String line) {
 
-        String[] parts = line.replaceAll("(^\\s+|\\s+$)", "").split("\\s+");
+        line = line.replaceAll("(^\\s+|\\s+$)", "");
+        int a = line.indexOf("(");
+        int b = line.indexOf("\s");
+        String temp = line.substring(b,a);
+        if (!temp.isBlank() || temp == "\s"){
+            line = line.replaceAll(temp," ");
+        }
+//        String[] parts = line.replaceAll("(^\\s+|\\s+$)", "").split("\\s+");
+        String[] parts = line.split("\\s+");
         int numOfParts = parts.length;
 
         if (numOfParts < 7){
@@ -69,5 +77,33 @@ public class Parser {
         String parseInfo = userId + " " + lineNo + " " + noOfChar + " " + lineContent;
         System.out.println(parseInfo);
         return parseInfo;
+    }
+
+    public String obtainCommitHash(Process processLog){
+        inputStreamReader = new InputStreamReader(processLog.getInputStream());
+        reader = new BufferedReader(inputStreamReader);
+
+        String hashKey = null;
+
+        boolean hasLine = true;
+
+        try {
+            while (hasLine) {
+                String line = reader.readLine();
+                if (line == null) {
+                    hasLine = false;
+                    continue;
+                } else if (line.startsWith("commit"))
+                {
+                    String[] parts = line.split("\\s+");
+                    hashKey = parts[1];
+                }
+
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            return hashKey;
+        }
     }
 }

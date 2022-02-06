@@ -14,7 +14,6 @@ public class ProjectInfo {
     private String currentLocalPath;
     private String remoteRepoGitURL;
     ArrayList<FileInfo> javaFiles;
-//    private HashMap<String, User> projectContributors;
     private UserManagement projectContributors;
     User mostLineContributor;
     User mostCharContributor;
@@ -106,12 +105,14 @@ public class ProjectInfo {
         for (int i = 0; i < javaFiles.size(); i++) {
             FileInfo file = javaFiles.get(i);
             file.updateFileContributions();
-//            HashMap<String, User> fileUsers = file.getFileContributors();
             HashMap<String, User> fileUsers = file.getFileContributors().getUserList();
-            if (!fileUsers.isEmpty()){
+            if (!fileUsers.isEmpty() && file.getCommitStatus()==false){
                 file.getContributionReport();
                 ProgressRecorder.initiateWrite(file);
                 this.addContributionsFromFile(fileUsers);
+            } else {
+                System.out.println("No futher evaluation required. \"" +
+                        file.getFileName() + "\" is at the latest commit!");
             }
         }
     }
@@ -125,13 +126,10 @@ public class ProjectInfo {
         for (HashMap.Entry<String, User> entry : fileContributors.entrySet()) {
             String fileContributor = entry.getKey();
             User fileContributorInfo = entry.getValue();
-//            boolean isNewUser = !projectContributors.containsKey(fileContributor);
             boolean isNewUser = !projectContributors.getUserList().containsKey(fileContributor);
             if (isNewUser) {
-//                projectContributors.put(fileContributor, fileContributorInfo);
                 projectContributors.getUserList().put(fileContributor, fileContributorInfo);
             } else {
-//                User projectContributor = projectContributors.get(fileContributor);
                 User projectContributor = projectContributors.getUserList().get(fileContributor);
                 int newCharContribution = fileContributorInfo.getTotalChar();
                 int newNoLinesContribution = fileContributorInfo.getNoOfLinesContributed();

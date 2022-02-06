@@ -20,6 +20,8 @@ public class ProgressRecorder {
             f = Storage.getFile(file.getLocalPathInCode(),file.getFileName());
             Storage.clearContents();
             fw = new FileWriter(f.getAbsolutePath(),true);
+            fw.write("CommitID: " + file.getCommitID() + System.lineSeparator() +
+                    System.lineSeparator());
             fw.write("User | Total Characters Contributed | Total Lines Contributed | List of Lines " +
                     "Contributed" + System.lineSeparator());
             writeUsers(file.getFileContributors().getUserList());

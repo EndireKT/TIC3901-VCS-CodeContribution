@@ -17,11 +17,11 @@ public class ContributionChecker {
     private ArrayList<String> infoFromGitBlame = null;
 
 
+
     public ContributionChecker(FileInfo fileInfo) {
         this.fileInfo = fileInfo;
         commandPrompt = new CommandPrompt();
         parser = new Parser();
-//        userManagement = new UserManagement(fileInfo.getFileContributors());
         userManagement = fileInfo.getFileContributors();
     }
 
@@ -36,7 +36,6 @@ public class ContributionChecker {
 
     private void callCommandPrompt_GitBlame() {
         try {
-
             process = commandPrompt.gitBlame(fileInfo.getLocalPathInCode(), fileInfo.getFileName());
             System.out.println("Command Prompt Git Blame complete\n");
         } catch (Exception e) {
@@ -46,6 +45,7 @@ public class ContributionChecker {
             e.printStackTrace();
         }
     }
+
 
     private void callParser_ReadAndParseProcess() {
         try {

@@ -20,10 +20,16 @@ public class ProgressReader {
         try{
             f = Storage.getFile(file.getLocalPathInCode(),file.getFileName());
             currentFile = new Scanner(f);
-            currentFile.nextLine();
+            String userDetails;
             while (currentFile.hasNext()){
-                String userDetails= currentFile.nextLine();
-                if (userDetails.startsWith("The user who")){
+                userDetails= currentFile.nextLine();
+                if (userDetails.startsWith("CommitID:")){
+                    file.setCommitID(parseCommitID(userDetails, file.getFileContributors().getUserList()));
+                    userDetails= currentFile.nextLine();
+                    userDetails= currentFile.nextLine();
+                    continue;
+                }
+                else if (userDetails.startsWith("The user who")){
                     break;
                 } else if(userDetails.equals("")){
                     continue;
@@ -36,12 +42,20 @@ public class ProgressReader {
         }
     }
 
-    public static void parseText(String userDetails, HashMap<String, User> fileContributors){
+    private static void parseText(String userDetails, HashMap<String, User> fileContributors){
         String[] expected = userDetails.split("\\|");
         User newUser = new User(expected[0].trim(), Integer.parseInt(expected[1].trim()),
                 Integer.parseInt(expected[2].trim()));
         newUser.populateLines(Integer.parseInt(expected[2].trim()));
         fileContributors.put(newUser.getId(), newUser);
+    }
+
+    private static String parseCommitID(String userDetails, HashMap<String, User> fileContributors){
+        String[] expected = userDetails.split("\s+");
+        if (expected.length > 1){
+            return expected[1];
+        }
+        return null;
     }
 
 }
