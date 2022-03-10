@@ -12,28 +12,6 @@ public class CommandPrompt {
         pBuilder = new ProcessBuilder();
     }
 
-    /*
-    public Process gitBlame(String pathCode, String fileName) throws IOException {
-
-        String commandInput = "cd " + pathCode + " && git blame " + fileName;
-        pBuilder.command("cmd.exe", "/c", commandInput);
-        Process process = pBuilder.start();
-
-        return process;
-    }
-
-    public Process gitLog(String pathCode, String fileName) throws IOException {
-
-        String commandInput = "cd " + pathCode + " && git log " + fileName;
-        pBuilder.command("cmd.exe", "/c", commandInput);
-        Process process = pBuilder.start();
-
-        return process;
-    }
-
-
-     */
-
     public static Process getProjectCommitHash(String pathCode) throws IOException {
         String commandInput = "cd " + pathCode + " && git log --pretty=%h";
         pBuilder.command("cmd.exe", "/c", commandInput);

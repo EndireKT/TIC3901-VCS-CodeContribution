@@ -1,9 +1,6 @@
 package projectFiles;
 
 import commandPrompt.CommandPrompt;
-// import user.User;
-// import user.UserManagement;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,13 +10,7 @@ public class ProjectInfo {
 
     private String currentLocalPath;
     private String remoteRepoGitURL;
-
     ArrayList<FileInfo> javaFilesFromCommit;
-
-    //private UserManagement projectContributors;
-    //User mostLineContributor;
-    //User mostCharContributor;
-
     private ArrayList<String> commitList;
     private ArrayList<String> committerList;
     ArrayList<FileInfo> latestFilesCheckedAndUpdated;
@@ -52,11 +43,8 @@ public class ProjectInfo {
             return null;
         }
 
-
         this.checkThroughCommits(pathCode);
         this.updateProjectMainContributor();
-
-        //this.updateProjectContributions();
 
         return this;
     }
@@ -168,15 +156,6 @@ public class ProjectInfo {
                 commitHash, commitContributor);
     }
 
-    /*
-    // Check whether Project has any Java Files
-    private boolean hasJavaFiles() {
-        if (javaFilesFromCommit == null) {
-            return false;
-        }
-        return true;
-    }
-     */
 
     private void checkThroughCommits(String pathCode) {
         int size = commitList.size();
@@ -217,49 +196,15 @@ public class ProjectInfo {
         // mainContributor for this project
     }
 
-    /*
-    // update projectContributors, mostLineContributor & mostCharContributor
-    // 1. Loop through each java file and calls ContributionChecker for each file
-    // 2. When each file get updated by ContributionChecker,
-    // this Project File gets updated as well
-    public void updateProjectContributions() {
-//        projectContributors = new HashMap<>();
-        projectContributors = new UserManagement();
-        for (int i = 0; i < javaFiles.size(); i++) {
-            FileInfo file = javaFiles.get(i);
-            file.updateFileContributions();
-            HashMap<String, User> fileUsers = file.getFileContributors().getUserList();
-            if (!fileUsers.isEmpty() && file.getCommitStatus()==false){
-                file.getContributionReport();
-                ProgressRecorder.initiateWrite(file);
-                this.addContributionsFromFile(fileUsers);
-            } else {
-                System.out.println("No futher evaluation required. \"" +
-                        file.getFileName() + "\" is at the latest commit!");
-            }
+    public void printContributorsInfo() {
+        System.out.println("The main contributor for the project is " + mainContributor);
+        for (int i = 0; i < latestFilesCheckedAndUpdated.size(); i++){
+            FileInfo currentFile = latestFilesCheckedAndUpdated.get(i);
+            String fileName = currentFile.getFileName();
+            String fileContributor = currentFile.getMainContributor();
+            System.out.println("The main contributor for the file '" + fileName +
+                    "' is " + fileContributor);
         }
     }
-
-    // Checks HashMap input against instance of HashMap in ProjectInfo object
-    // if user exist in both HashMap, update the contributions in the ProjectInfo HashMap
-    // with the input HashMap
-    // if user does not exist in ProjectInfo HashMap
-    // add new user with contribution to ProjectInfo HashMap
-    private void addContributionsFromFile(HashMap<String, User> fileContributors) {
-        for (HashMap.Entry<String, User> entry : fileContributors.entrySet()) {
-            String fileContributor = entry.getKey();
-            User fileContributorInfo = entry.getValue();
-            boolean isNewUser = !projectContributors.getUserList().containsKey(fileContributor);
-            if (isNewUser) {
-                projectContributors.getUserList().put(fileContributor, fileContributorInfo);
-            } else {
-                User projectContributor = projectContributors.getUserList().get(fileContributor);
-                int newCharContribution = fileContributorInfo.getTotalChar();
-                int newNoLinesContribution = fileContributorInfo.getNoOfLinesContributed();
-                projectContributor.updateContribution(newCharContribution, newNoLinesContribution);
-            }
-        }
-    }
-     */
 
 }
