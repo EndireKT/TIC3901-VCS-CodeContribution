@@ -1,7 +1,7 @@
 package projectFiles;
 
 import contributionChecker.ContributionChecker;
-import contributionChecker.CommitChecker;
+// import contributionChecker.CommitChecker;
 import user.*;
 
 import java.util.HashMap;
@@ -11,17 +11,41 @@ public class FileInfo {
     private String localPathInCode;
     private String fileName;
     private String commitID;
-    private boolean isLatestCommit = false;
-    private UserManagement fileContributors;
-    private User mostLineContributor = null;
-    private User mostCharContributor = null;
+    // private boolean isLatestCommit = false;
 
-    public FileInfo(String pathCode, String file) {
+    //private UserManagement fileContributors;
+    //private User mostLineContributor = null;
+    //private User mostCharContributor = null;
+
+    private String mainContributor;
+    private String fileContent;
+
+    public FileInfo(String pathCode, String file,
+                    String commitHash, String commitContributor) {
         localPathInCode = pathCode;
         fileName = file;
-        fileContributors = new UserManagement();
+        // fileContributors = new UserManagement();
+        commitID = commitHash;
+        mainContributor = commitContributor;
+        this.getContentFromFile();
     }
 
+    public String getLocalPathInCode() {
+        return localPathInCode;
+    }
+
+    public String getCommitID(){ return commitID;}
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    private void getContentFromFile() {
+        // read the file using the localPathInCode
+        // update the fileContent field with the contents of the file made into ONE string
+    }
+
+    /*
     public void updateFileContributions() {
         ContributionChecker checker = new ContributionChecker(this);
         String currentCommitID = CommitChecker.obtainCommitId(this);
@@ -63,17 +87,7 @@ public class FileInfo {
         return fileContributors;
     }
 
-    public String getLocalPathInCode() {
-        return localPathInCode;
-    }
-
-    public String getCommitID(){ return commitID;}
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setCommitID(String commitID) { this.commitID = commitID;}
+        public void setCommitID(String commitID) { this.commitID = commitID;}
 
     public User getMostLineContributor(){return mostLineContributor;}
 
@@ -110,8 +124,10 @@ public class FileInfo {
                 + " with " + mostLineContributor.getNoOfLinesContributed() + " lines contributed.");
         System.out.println("The user who contributed the most characters is " + mostCharContributor.getId()
                 + " with " + mostCharContributor.getTotalChar() + " characters contributed.");
-
-
     }
+
+     */
+
+
 }
 

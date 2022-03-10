@@ -3,7 +3,7 @@ package contributionChecker;
 import commandPrompt.CommandPrompt;
 import parser.Parser;
 import projectFiles.FileInfo;
-import user.UserManagement;
+//import user.UserManagement;
 
 import java.util.ArrayList;
 
@@ -11,20 +11,29 @@ public class ContributionChecker {
     private FileInfo fileInfo;
     private CommandPrompt commandPrompt;
     private Parser parser;
-    private UserManagement userManagement;
+    //private UserManagement userManagement;
 
     private Process process;
     private ArrayList<String> infoFromGitBlame = null;
-
 
 
     public ContributionChecker(FileInfo fileInfo) {
         this.fileInfo = fileInfo;
         commandPrompt = new CommandPrompt();
         parser = new Parser();
-        userManagement = fileInfo.getFileContributors();
+        //userManagement = fileInfo.getFileContributors();
     }
 
+    public void checkContributionBetweenTwoFileVersions(FileInfo fileFromOlderCommit,
+                                                        FileInfo fileFromNewerCommit) {
+
+        // Check LevenshteinDistance between the contents of the two files
+        // Update the "mainContributor" in "fileFromNewerCommit" with who contributed more
+        // whether it's the previous main contributor or the latest committer
+
+    }
+
+    /*
     public void run() {
         process = null;
 
@@ -62,5 +71,6 @@ public class ContributionChecker {
     private void callUserManagement_addUser() {
         userManagement.addUser(infoFromGitBlame);
     }
+     */
 
 }

@@ -1,4 +1,6 @@
+/*
 package contributionChecker;
+
 
 import commandPrompt.CommandPrompt;
 import projectFiles.FileInfo;
@@ -43,3 +45,5 @@ public class CommitChecker {
     }
 
 }
+
+ */

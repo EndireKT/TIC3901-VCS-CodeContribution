@@ -1,22 +1,30 @@
 package projectFiles;
 
-import storage.ProgressRecorder;
-import user.User;
-import user.UserManagement;
+import commandPrompt.CommandPrompt;
+// import user.User;
+// import user.UserManagement;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ProjectInfo {
 
     private String currentLocalPath;
     private String remoteRepoGitURL;
-    ArrayList<FileInfo> javaFiles;
-    private UserManagement projectContributors;
-    User mostLineContributor;
-    User mostCharContributor;
+
+    ArrayList<FileInfo> javaFilesFromCommit;
+
+    //private UserManagement projectContributors;
+    //User mostLineContributor;
+    //User mostCharContributor;
+
+    private ArrayList<String> commitList;
+    private ArrayList<String> committerList;
+    ArrayList<FileInfo> latestFilesCheckedAndUpdated;
+    private String commitChecked;
+    private String mainContributor;
 
     public ProjectInfo(String localPath){
         // Set path info
@@ -27,21 +35,31 @@ public class ProjectInfo {
 
         String pathCode = getLocalPathInCode(currentLocalPath);
         remoteRepoGitURL = getGitRemoteProjectURL(pathCode);
-        this.addJavaFilesToProjectInfo(pathCode);
 
         if (this.hasRemoteGitRepo() == false) {
             System.out.println("Can't check contribution, project does not exist on Github.");
             return null;
         }
-        if (this.hasJavaFiles() == false) {
-            System.out.println("Project has no java files to check for contribution.");
+
+        this.setCommitDetails(pathCode);
+
+        if (this.hasCommitDetails() == false) {
+            System.out.println("Unable to check contribution due to missing Commit details");
             return null;
         }
-        this.updateProjectContributions();
+        if (this.hasValidCommitDetails() == false) {
+            System.out.println("Commit details do not tally.");
+            return null;
+        }
+
+
+        this.checkThroughCommits(pathCode);
+        this.updateProjectMainContributor();
+
+        //this.updateProjectContributions();
+
         return this;
     }
-
-
 
 
     // Takes the local path and parses it
@@ -74,6 +92,67 @@ public class ProjectInfo {
         return null;
     }
 
+    private ArrayList<String> getCommitList(String pathCode) {
+        try {
+            Process process = CommandPrompt.getProjectCommitHash(pathCode);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            boolean hasLine = true;
+            ArrayList<String> commits = null;
+            while (hasLine) {
+                String commitHash = reader.readLine();
+                if (commitHash == null) {
+                    hasLine = false;
+                    continue;
+                }
+                commits.add(commitHash);
+            }
+            return commits;
+        } catch (IOException e) {
+            System.out.println("Unable to get commit hashes");
+            return null;
+        }
+    }
+
+    private ArrayList<String> getCommitterList(String pathCode) {
+        try {
+            Process process = CommandPrompt.getCommitterName(pathCode);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            boolean hasLine = true;
+            ArrayList<String> committers = null;
+            while (hasLine) {
+                String committerName = reader.readLine();
+                if (committerName == null) {
+                    hasLine = false;
+                    continue;
+                }
+                committers.add(committerName);
+            }
+            return committers;
+        } catch (IOException e) {
+            System.out.println("Unable to get committers");
+            return null;
+        }
+    }
+
+    private void setCommitDetails(String pathCode){
+        commitList = getCommitList(pathCode);
+        committerList = getCommitterList(pathCode);
+    }
+
+    private boolean hasCommitDetails() {
+        if (commitList == null || committerList == null) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean hasValidCommitDetails() {
+        if (commitList.size() != committerList.size()) {
+            return false;
+        }
+        return true;
+    }
+
     // Check whether Project has a Git remote repo
     private boolean hasRemoteGitRepo() {
         if (remoteRepoGitURL == null) {
@@ -83,18 +162,62 @@ public class ProjectInfo {
     }
 
     // Calls fileIdentifier to get all the fileInfo of the Java files inside the Project
-    private void addJavaFilesToProjectInfo(String pathCode) {
-        javaFiles = FileIdentifier.getJavaFilesFromPath(pathCode);
+    private void addJavaFilesFromCommit(String pathCode, String commitHash,
+                                        String commitContributor) {
+        javaFilesFromCommit = FileIdentifier.getJavaFilesFromPath(pathCode,
+                commitHash, commitContributor);
     }
 
+    /*
     // Check whether Project has any Java Files
     private boolean hasJavaFiles() {
-        if (javaFiles == null) {
+        if (javaFilesFromCommit == null) {
             return false;
         }
         return true;
     }
+     */
 
+    private void checkThroughCommits(String pathCode) {
+        int size = commitList.size();
+        for (int i = size-1; i >= 0; i-- ) {
+            String currentCommit = commitList.get(i);
+            String commitContributor = committerList.get(i);
+            CommandPrompt.checkoutCommit(pathCode, currentCommit);
+            this.addJavaFilesFromCommit(pathCode, currentCommit, commitContributor);
+            updateLatestFileChecked(currentCommit, commitContributor);
+        }
+    }
+
+    private void updateLatestFileChecked(String commit, String committer) {
+        if (latestFilesCheckedAndUpdated != null) {
+            updateCheckedFiles();
+        } else if (javaFilesFromCommit == null) {
+            mainContributor = committer;
+        }
+        latestFilesCheckedAndUpdated = javaFilesFromCommit;
+        commitChecked = commit;
+    }
+
+    private void updateCheckedFiles() {
+        // Check for files with same name in "javaFilesFromCommit" and "latestFilesCheckedAndUpdated"
+        // If there are files with the same name, call the function
+        // "checkContributionBetweenTwoFileVersions" from ContributionChecker
+        // "fileFromOlderCommit" will be from the "latestFilesCheckedAndUpdated" ArrayList
+        // "fileFromNewerCommit" will be from the "javaFilesFromCommit"
+        // fileFromOlderCommit.getFileName() == fileFromNewerCommit.getFileName()
+    }
+
+    private void updateProjectMainContributor() {
+        if (latestFilesCheckedAndUpdated == null) {
+            return;
+        }
+        // Check through the mainContributors of the files in "latestFilesCheckedAndUpdated"
+        // The name of the mainContributor that's repeated the most will be the
+        // mainContributor for this project
+    }
+
+    /*
     // update projectContributors, mostLineContributor & mostCharContributor
     // 1. Loop through each java file and calls ContributionChecker for each file
     // 2. When each file get updated by ContributionChecker,
@@ -137,5 +260,6 @@ public class ProjectInfo {
             }
         }
     }
+     */
 
 }

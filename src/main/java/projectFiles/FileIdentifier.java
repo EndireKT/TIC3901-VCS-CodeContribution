@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public class FileIdentifier {
     private static ProcessBuilder pBuilder = new ProcessBuilder();
 
-    public static ArrayList<FileInfo> getJavaFilesFromPath(String pathCode) {
+    public static ArrayList<FileInfo> getJavaFilesFromPath(String pathCode, String commitID,
+                                                           String commitContributor) {
         ArrayList<String> allFiles = getListOfFileNames(pathCode);
         if (allFiles == null) {
             return null;
@@ -18,7 +19,7 @@ public class FileIdentifier {
         for(int i = 0; i < allFiles.size(); i++) {
             String fileName = allFiles.get(i);
             if (fileName.endsWith(".java")) {
-                FileInfo newFile = new FileInfo(pathCode, fileName);
+                FileInfo newFile = new FileInfo(pathCode, fileName, commitID, commitContributor);
                 ProgressReader.initiateRead(newFile);
                 javaFiles.add(newFile);
             }

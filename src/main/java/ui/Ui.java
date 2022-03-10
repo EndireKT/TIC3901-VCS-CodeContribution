@@ -1,6 +1,8 @@
 package ui;
 
 import projectFiles.ProjectInfo;
+
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Ui {
@@ -25,7 +27,9 @@ public class Ui {
         String localPath = getProjectPath();
         ProjectInfo newProject = new ProjectInfo(localPath);
         newProject.getProjectInfo();
-
+        if (newProject == null) {
+            System.out.println("Failed to check project");
+        }
     }
 
     /*
