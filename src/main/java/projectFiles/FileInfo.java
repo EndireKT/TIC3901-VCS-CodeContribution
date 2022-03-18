@@ -6,14 +6,15 @@ public class FileInfo {
     private String fileName;
     private String commitID;
     private String mainContributor;
+    private String fileContent;
 
-    public FileInfo(String pathCode, String file,
-                    String commitHash, String commitContributor) {
+    public FileInfo(String pathCode, String fileName,
+                    String commitID, String commitContributor, String fileContent) {
         this.pathCode = pathCode;
-        fileName = file;
-        commitID = commitHash;
+        this.fileName = fileName;
+        this.commitID = commitID;
         mainContributor = commitContributor;
-        //todo this.getContentFromFile();
+        this.fileContent = fileContent;
     }
 
     public String getPathCode() {
@@ -36,7 +37,9 @@ public class FileInfo {
         return mainContributor;
     }
 
-
+    public String getFileContent() {
+        return fileContent;
+    }
 
     public void setMainContributor(String newMainContributor) {
         mainContributor = newMainContributor;

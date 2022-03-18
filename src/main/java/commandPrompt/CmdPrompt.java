@@ -65,9 +65,10 @@ public class CmdPrompt {
      * @param pathCode   String representing the file path
      * @param commitHash String representing the hash (identifier) of the commit
      */
-    public static void checkoutCommit(String pathCode, String commitHash) {
+    public static void checkoutCommit(String pathCode, String commitHash) throws IOException {
         String commandInput = "cd " + pathCode + " && git checkout " + commitHash;
         pBuilder.command("cmd.exe", "/c", commandInput);
+        pBuilder.start();
     }
 
     /**

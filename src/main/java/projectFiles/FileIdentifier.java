@@ -1,6 +1,8 @@
 package projectFiles;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
@@ -12,6 +14,12 @@ public class FileIdentifier {
     public static ArrayList<FileInfo> getJavaFilesFromPath(
             String pathCode, String commitID, String commitContributor) {
 
+        // todo delete this later,
+        //  after we can recursively search through the entire directory
+        //  and nested folders for java files
+        pathCode = "D:\\\\My Files\\\\School Documents\\\\Repository" +
+                "\\\\TIC3901_TestRepo\\\\src\\\\main\\\\java";
+
         ArrayList<String> allFiles = getListOfFileNames(pathCode);
 
         if (allFiles == null) {
@@ -19,10 +27,16 @@ public class FileIdentifier {
         }
 
         ArrayList<FileInfo> javaFiles = new ArrayList<>();
+
         for (int i = 0; i < allFiles.size(); i++) {
             String fileName = allFiles.get(i);
+
+            String filePath = pathCode + "\\\\" + fileName;
+            File file = new File(filePath);
+            String fileContent = ProjectFileReader.readFile(file);
+
             if (fileName.endsWith(".java")) {
-                FileInfo newFile = new FileInfo(pathCode, fileName, commitID, commitContributor);
+                FileInfo newFile = new FileInfo(pathCode, fileName, commitID, commitContributor, fileContent);
                 //todo ProgressReader.initiateRead(newFile);
                 javaFiles.add(newFile);
             }

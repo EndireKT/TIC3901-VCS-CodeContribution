@@ -4,10 +4,20 @@ import java.util.Arrays;
 
 public class LevenshteinDistance {
 
-    // todo logic might be wrong, need to check again
-    // return true if the edited text is the new owner of the input string
-    // str1 = original (older) text; str2 = edited (newer) text
-    static boolean compareContribution(String str1, String str2) {
+    /**
+     * Compare two String using Levenshtein Distance
+     *
+     * Compute using the formula:
+     *      if (LD value > half of total character size in str1 (previous commit))
+     *
+     * Return true if  LD value is greater
+     * Return false if LD value is same or lower
+     * 
+     * @param str1 String representing the original text (in previous commit)
+     * @param str2 String representing the edited text (in current commit)
+     * @return boolean
+     */
+    public static boolean compareContribution(String str1, String str2) {
         int charStr2 = str2.length();
         int levenshtein_distance = compute_Levenshtein_distanceDP(str1, str2);
 
@@ -18,7 +28,7 @@ public class LevenshteinDistance {
         }
     }
 
-    static int compute_Levenshtein_distanceDP(String str1, String str2) {
+    private static int compute_Levenshtein_distanceDP(String str1, String str2) {
 
         // A 2-D matrix to store previously calculated
         // answers of subproblems in order
@@ -48,7 +58,7 @@ public class LevenshteinDistance {
                     // operations below
 
 
-                    dp[i][j] = minm_edits(dp[i - 1][j - 1]
+                    dp[i][j] = minmEdits(dp[i - 1][j - 1]
                                     + NumOfReplacement(str1.charAt(i - 1), str2.charAt(j - 1)), // replace
                             dp[i - 1][j] + 1, // delete
                             dp[i][j - 1] + 1); // insert
@@ -62,7 +72,7 @@ public class LevenshteinDistance {
     // check for distinct characters
     // in str1 and str2
 
-    static int NumOfReplacement(char c1, char c2) {
+    private static int NumOfReplacement(char c1, char c2) {
         return c1 == c2 ? 0 : 1;
     }
 
@@ -70,7 +80,7 @@ public class LevenshteinDistance {
     // operations performed and returns the
     // minimum value among them.
 
-    static int minm_edits(int... nums) {
+    private static int minmEdits(int... nums) {
         return Arrays.stream(nums).min().orElse(
                 Integer.MAX_VALUE);
     }
