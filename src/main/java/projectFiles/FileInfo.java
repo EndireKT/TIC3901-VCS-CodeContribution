@@ -36,7 +36,7 @@ public class FileInfo {
         return mainContributor;
     }
 
-
+    public void setCommitID(String commitID){this.commitID = commitID;}
 
     public void setMainContributor(String newMainContributor) {
         mainContributor = newMainContributor;

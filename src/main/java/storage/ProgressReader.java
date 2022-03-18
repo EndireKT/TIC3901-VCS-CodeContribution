@@ -1,15 +1,64 @@
 package storage;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
+import projectFiles.FileIdentifier;
 import projectFiles.FileInfo;
 
 public class ProgressReader {
-    public static ArrayList<FileInfo> read() {
+
+    private static File f = null;
+
+    public static ArrayList<FileInfo> read(String currentLocalPath) {
         ArrayList<FileInfo> fileInfoHistory = new ArrayList<>();
-        // todo
-
-
+        fileInfoHistory = FileIdentifier.getFilesHistory(currentLocalPath);
+        for (FileInfo eachFile : fileInfoHistory){
+            initiateRead(eachFile);
+        }
         return fileInfoHistory;
+    }
+
+    private static void initiateRead(FileInfo file){
+        Scanner currentFile;
+        try{
+            f = TextFile.getFile(file.getFilePath());
+            currentFile = new Scanner(f);
+            String userDetails;
+            while (currentFile.hasNext()){
+                userDetails= currentFile.nextLine();
+                if (userDetails.startsWith("CommitID:")){
+                    file.setCommitID(parseCommitID(userDetails));
+                    continue;
+                }
+                else if (userDetails.startsWith("Main Contributor:")){
+                    file.setMainContributor(parseContributor(userDetails));
+                    break;
+                } else if(userDetails.equals("")){
+                    continue;
+                }
+            }
+            currentFile.close();
+        } catch (IOException e) {
+            System.out.println("No existing file found for " + file.getFileName());
+        }
+    }
+
+    private static String parseCommitID(String userDetails){
+        String[] expected = userDetails.split("\s+");
+        if (expected.length > 1){
+            return expected[1].trim();
+        }
+        return null;
+    }
+
+    private static String parseContributor(String userDetails){
+        String[] expected = userDetails.split("\s+");
+        if (expected.length > 1){
+            return expected[2].trim();
+        }
+        return null;
     }
 }

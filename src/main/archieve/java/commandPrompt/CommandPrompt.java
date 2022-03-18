@@ -1,4 +1,4 @@
-package commandPrompt;
+package commandprompt;
 
 import java.io.IOException;
 

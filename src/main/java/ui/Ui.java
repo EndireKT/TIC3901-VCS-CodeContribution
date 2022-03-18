@@ -1,7 +1,6 @@
 package ui;
 
 import projectFiles.ProjectInfo;
-
 import java.util.Scanner;
 
 public class Ui {

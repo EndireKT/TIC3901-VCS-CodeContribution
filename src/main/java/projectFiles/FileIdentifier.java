@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import commandPrompt.CmdPrompt;
+import commandprompt.CmdPrompt;
 
 public class FileIdentifier {
     private static ProcessBuilder pBuilder = new ProcessBuilder();
@@ -54,4 +54,26 @@ public class FileIdentifier {
 
         return null;
     }
+
+    public static ArrayList<FileInfo> getFilesHistory(String pathCode) {
+
+        ArrayList<String> allFiles = getListOfFileNames(pathCode);
+
+        if (allFiles == null) {
+            return null;
+        }
+
+        ArrayList<FileInfo> txtFiles = new ArrayList<>();
+        for (int i = 0; i < allFiles.size(); i++) {
+            String fileName = allFiles.get(i);
+            if (fileName.endsWith(".txt")) {
+                FileInfo newFile = new FileInfo(pathCode, fileName.replaceAll("\\.txt",".java" )
+                        , "NIL" , "NIL");
+                txtFiles.add(newFile);
+            }
+        }
+
+        return txtFiles;
+    }
+
 }

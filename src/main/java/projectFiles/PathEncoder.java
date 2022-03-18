@@ -3,7 +3,7 @@ package projectFiles;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import commandPrompt.CmdPrompt;
+import commandprompt.CmdPrompt;
 
 public class PathEncoder {
 
