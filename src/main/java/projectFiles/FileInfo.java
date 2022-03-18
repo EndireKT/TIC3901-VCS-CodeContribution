@@ -29,7 +29,7 @@ public class FileInfo {
         return fileName;
     }
 
-    public String getFilePath(){
+    public String getFilePath() {
         return pathCode + "\\\\" + fileName;
     }
 
@@ -39,6 +39,10 @@ public class FileInfo {
 
     public String getFileContent() {
         return fileContent;
+    }
+
+    public void setCommitID(String commitID) {
+        this.commitID = commitID;
     }
 
     public void setMainContributor(String newMainContributor) {

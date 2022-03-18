@@ -3,7 +3,7 @@ package projectFiles;
 import java.io.File;
 import java.util.ArrayList;
 
-import commandPrompt.CmdPrompt;
+import commandprompt.CmdPrompt;
 import contributionChecker.ContributionChecker;
 import storage.ProgressReader;
 import storage.ProgressRecorder;
@@ -91,7 +91,7 @@ public class ProjectInfo {
     }
 
     private void initiateProgressRead() {
-        ArrayList<FileInfo> fileInfoHistory = ProgressReader.read();
+        ArrayList<FileInfo> fileInfoHistory = ProgressReader.read(currentLocalPath);
         if (!fileInfoHistory.isEmpty()) {
             fileInfos_PreviousCommit = fileInfoHistory;
             hasContributionCheckHisotry = true;

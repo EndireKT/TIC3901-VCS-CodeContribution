@@ -1,6 +1,6 @@
 package projectFiles;
 
-import commandPrompt.CommandPrompt;
+import commandprompt.CommandPrompt;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
