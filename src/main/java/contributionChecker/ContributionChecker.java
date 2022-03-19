@@ -1,10 +1,13 @@
 package contributionChecker;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import projectFiles.FileInfo;
 
 public class ContributionChecker {
+
+    private ProjectContributorEvaluator projectContributorEvaluator;
 
     /**
      * Compare two String using Levenshtein Distance
@@ -20,7 +23,16 @@ public class ContributionChecker {
         return LevenshteinDistance.compareContribution(fileContentPreviousCommit, fileContentCurrentCommit);
     }
 
-    public ArrayList<String> compareFileMainContributor(ArrayList<FileInfo> filesInfos) {
-        return ProjectContributorEvaluator.evaluate(filesInfos);
+    public void evaluateFileInfos(ArrayList<FileInfo> filesInfos) {
+        projectContributorEvaluator = new ProjectContributorEvaluator(filesInfos);
+        projectContributorEvaluator.evaluate();
+    }
+
+    public Set<String> getContributorFrequency() {
+        return projectContributorEvaluator.getContributorFrequency();
+    }
+
+    public ArrayList<String> getProjectMainContributors() {
+        return projectContributorEvaluator.getProjectMainContributors();
     }
 }

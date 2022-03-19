@@ -59,8 +59,6 @@ public class FileIdentifier {
                 }
                 output.add(currentLine);
             }
-            int exitCode = process.waitFor();
-            System.out.println("\nExited with error code : " + exitCode);
             return output;
         } catch (Exception e) {
             e.printStackTrace();

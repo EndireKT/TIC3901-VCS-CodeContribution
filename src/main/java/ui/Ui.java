@@ -20,7 +20,10 @@ public class Ui {
             System.out.println("Failed to check project");
         }
 
-        new ResultDisplayer(newProject).printContributionResult();
+        ResultDisplayer resultDisplayer = new ResultDisplayer(newProject);
+        resultDisplayer.printIndividualFileContributor();
+        resultDisplayer.printContributorFrequency();
+        resultDisplayer.printProjectMainContributors();
     }
 
     private static String getProjectPath() {

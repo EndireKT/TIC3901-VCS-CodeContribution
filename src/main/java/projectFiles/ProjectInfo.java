@@ -1,7 +1,7 @@
 package projectFiles;
 
-import java.io.File;
 import java.util.ArrayList;
+import java.util.Set;
 
 import commandprompt.CmdPrompt;
 import contributionChecker.ContributionChecker;
@@ -18,7 +18,8 @@ public class ProjectInfo {
     private boolean hasContributionCheckHisotry;
     private ArrayList<FileInfo> fileInfos_CurrentCommit;
     private ArrayList<FileInfo> fileInfos_PreviousCommit;
-    private ArrayList<String> projectContributor;
+    private Set<String> contributorFrequency;
+    private ArrayList<String> projectMainContributors;
 
     public ProjectInfo(String localPath) {
         currentLocalPath = localPath;
@@ -76,18 +77,26 @@ public class ProjectInfo {
 
         initiateContributionCheckForEachCommit();
 
-        // todo delete these later
-        for (FileInfo fileInfo : fileInfos_CurrentCommit) {
-            System.out.println(fileInfo.getFilePath());
-            System.out.println(fileInfo.getMainContributor());
-            System.out.println(fileInfo.getCommitID() + "\n");
-        }
-        System.out.println("Done");
+        contributionChecker.evaluateFileInfos(fileInfos_CurrentCommit);
+        contributorFrequency = contributionChecker.getContributorFrequency();
+        projectMainContributors = contributionChecker.getProjectMainContributors();
 
-        projectContributor = contributionChecker.compareFileMainContributor(fileInfos_CurrentCommit);
+
         new ProgressRecorder(fileInfos_CurrentCommit).record();
 
         return this;
+    }
+
+    public ArrayList<FileInfo> getFileInfos_CurrentCommit() {
+        return fileInfos_CurrentCommit;
+    }
+
+    public Set<String> getContributorFrequency() {
+        return contributorFrequency;
+    }
+
+    public ArrayList<String> getProjectMainContributors() {
+        return projectMainContributors;
     }
 
     private void initiateProgressRead() {
@@ -116,7 +125,6 @@ public class ProjectInfo {
             // todo
         }
     }
-
 
     /**
      * Initialize the contribution check for each commit

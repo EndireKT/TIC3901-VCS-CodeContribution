@@ -71,8 +71,6 @@ public class ProjectInfo {
             Process process = pBuilder.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String remoteURL = reader.readLine();
-            int exitCode = process.waitFor();
-            System.out.println("\nExited with error code : " + exitCode);
             return remoteURL;
         } catch (Exception e) {
             e.printStackTrace();

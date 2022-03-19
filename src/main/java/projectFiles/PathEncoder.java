@@ -37,8 +37,7 @@ public class PathEncoder {
             Process process = CmdPrompt.getGitRemoteProjectUrl(pathCode);
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String remoteUrl = reader.readLine();
-            int exitCode = process.waitFor();
-            System.out.println("\nExited with error code : " + exitCode);
+
             return remoteUrl;
         } catch (Exception e) {
             e.printStackTrace();
