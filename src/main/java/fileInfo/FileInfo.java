@@ -1,4 +1,4 @@
-package projectFiles;
+package fileInfo;
 
 public class FileInfo {
 

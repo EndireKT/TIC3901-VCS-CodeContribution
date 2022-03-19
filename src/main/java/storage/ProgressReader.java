@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import projectFiles.FileIdentifier;
-import projectFiles.FileInfo;
+import fileInfo.FileIdentifier;
+import fileInfo.FileInfo;
 
 public class ProgressReader {
 

@@ -5,6 +5,8 @@ import java.util.Set;
 
 import commandprompt.CmdPrompt;
 import contributionChecker.ContributionChecker;
+import fileInfo.FileIdentifier;
+import fileInfo.FileInfo;
 import storage.ProgressReader;
 import storage.ProgressRecorder;
 

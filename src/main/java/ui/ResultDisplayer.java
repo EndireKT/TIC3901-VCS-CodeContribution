@@ -1,6 +1,6 @@
 package ui;
 
-import projectFiles.FileInfo;
+import fileInfo.FileInfo;
 import projectFiles.ProjectInfo;
 
 import java.util.ArrayList;

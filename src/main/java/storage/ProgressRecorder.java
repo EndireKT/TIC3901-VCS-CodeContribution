@@ -1,11 +1,11 @@
 package storage;
 
-import projectFiles.FileInfo;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import fileInfo.FileInfo;
 
 public class ProgressRecorder {
 

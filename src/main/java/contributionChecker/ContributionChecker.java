@@ -3,7 +3,7 @@ package contributionChecker;
 import java.util.ArrayList;
 import java.util.Set;
 
-import projectFiles.FileInfo;
+import fileInfo.FileInfo;
 
 public class ContributionChecker {
 
