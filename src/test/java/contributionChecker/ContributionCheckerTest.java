@@ -23,6 +23,8 @@ class ContributionCheckerTest {
                 "    }\n" +
                 "}";
 
+        System.out.println("Num of char prev: " + fileContentPreviousCommit.length());
+
         String fileContentCurrentCommit = "public class fileA {\n" +
                 "    public static void main(String[] args) {\n" +
                 "        System.out.println(\"Hello World\");\n" +
@@ -37,6 +39,9 @@ class ContributionCheckerTest {
                 "        System.out.println(HW);\n" +
                 "    }\n" +
                 "}";
+        System.out.println("Num of char current: " + fileContentCurrentCommit.length());
+        System.out.println("LD: " + LevenshteinDistance.computeLevenshteinDistanceDP(fileContentPreviousCommit, fileContentCurrentCommit) );
+
         boolean result = compareContribution(fileContentPreviousCommit, fileContentCurrentCommit);
         assertEquals(true, result);
         showResult(result);

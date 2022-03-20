@@ -132,9 +132,9 @@ public class ProjectInfo {
      * Initialize the contribution check for each commit
      * Perform these steps in sequence:
      * 1. Obtain commit ID and committer name from the back of the list (from oldest to most recent)
-     * 2. Git checkout using the commit ID
-     * 3. Keep a copy of the FileInfos in FileInfos_PreviousCommit
+     * 2. Keep a copy of the FileInfos in FileInfos_PreviousCommit
      * -----FileInfos_PreviousCommit stores the FileInfos of previous commit
+     * 3. Git checkout using the commit ID
      * 4. Identify all current java files in the current commit
      * 5. Calls for contribution check for each FileInfo
      */
@@ -144,8 +144,8 @@ public class ProjectInfo {
             String currentCommit = commitList.get(commitListIterator);
             String committer = committerList.get(commitListIterator);
 
-            initiateGitCheckOutCommit(currentCommit);
             fileInfos_PreviousCommit = fileInfos_CurrentCommit;
+            initiateGitCheckOutCommit(currentCommit);
             identifyJavaFilesFromCurrentCommit(currentCommit, committer);
             initiateContributionCheckForEachFileInfo(commitListIterator, size);
         }
@@ -203,7 +203,7 @@ public class ProjectInfo {
      */
     private void initiateContributionCheckForEachFileInfo(int commitListIterator, int size) {
 
-        if (commitListIterator == size - 1) {
+        if (commitListIterator == size - 1 && fileInfos_PreviousCommit.isEmpty()) {
             return;
         }
 
