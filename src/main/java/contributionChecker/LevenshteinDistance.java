@@ -4,31 +4,7 @@ import java.util.Arrays;
 
 public class LevenshteinDistance {
 
-    /**
-     * Compare two String using Levenshtein Distance
-     *
-     * Compute using the formula:
-     *      if (LD value > half of total character size in str1 (previous commit))
-     *
-     * Return true if  LD value is greater
-     * Return false if LD value is same or lower
-     * 
-     * @param str1 String representing the original text (in previous commit)
-     * @param str2 String representing the edited text (in current commit)
-     * @return boolean
-     */
-    public static boolean compareContribution(String str1, String str2) {
-        int charStr2 = str2.length();
-        int levenshtein_distance = compute_Levenshtein_distanceDP(str1, str2);
-
-        if (levenshtein_distance > charStr2 / 2) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private static int compute_Levenshtein_distanceDP(String str1, String str2) {
+    public static int computeLevenshteinDistanceDP(String str1, String str2) {
 
         // A 2-D matrix to store previously calculated
         // answers of subproblems in order

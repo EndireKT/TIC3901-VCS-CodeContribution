@@ -7,9 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ContributionCheckerTest {
 
+    ContributionChecker contributionChecker = new ContributionChecker();
+
     @Test
     boolean compareContribution(String fileContentPreviousCommit, String fileContentCurrentCommit) {
-        return LevenshteinDistance.compareContribution(fileContentPreviousCommit, fileContentCurrentCommit);
+        return contributionChecker.compareContribution(fileContentPreviousCommit, fileContentCurrentCommit);
     }
 
     @DisplayName("Test 1, File A, commit 1 vs commit 2")
