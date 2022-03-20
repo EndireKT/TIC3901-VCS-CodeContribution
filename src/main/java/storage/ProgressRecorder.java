@@ -10,11 +10,13 @@ import fileInfo.FileInfo;
 public class ProgressRecorder {
 
     private static ArrayList<FileInfo> javaFromCommit_CurrentCommit;
-    private static File f = null;
-    private static FileWriter fw = null;
+    private static File file;
+    private static FileWriter fw;
 
     public ProgressRecorder(ArrayList<FileInfo> javaFromCommit_CurrentCommit) {
         this.javaFromCommit_CurrentCommit = javaFromCommit_CurrentCommit;
+        file = null;
+        fw = null;
     }
 
     public static void record(){
@@ -25,9 +27,9 @@ public class ProgressRecorder {
 
     private static void initiateWrite(FileInfo file){
         try{
-            f = TextFile.getFile(file.getFilePath());
-//            TextFile.clearContents();
-            fw = new FileWriter(f.getAbsolutePath(),true);
+            ProgressRecorder.file = TextFile.getFile(file.getFilePath());
+
+            fw = new FileWriter(ProgressRecorder.file.getAbsolutePath(),true);
             fw.write("File Name: " + file.getFileName()+ System.lineSeparator());
             fw.write("CommitID: " + file.getCommitID() + System.lineSeparator());
             fw.write("Main Contributor: " + file.getMainContributor()+ System.lineSeparator()

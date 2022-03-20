@@ -12,9 +12,9 @@ public class ProjectContributorEvaluator {
     private ArrayList<FileInfo> filesInfos;
     private ArrayList<String> projectContributors;
     private Set<String> contributorFrequency;
-    private  ArrayList<String> projectMainContributors;
+    private ArrayList<String> projectMainContributors;
 
-    public ProjectContributorEvaluator (ArrayList<FileInfo> filesInfos){
+    public ProjectContributorEvaluator(ArrayList<FileInfo> filesInfos) {
         this.filesInfos = filesInfos;
         projectContributors = new ArrayList<>();
         projectMainContributors = new ArrayList<>();

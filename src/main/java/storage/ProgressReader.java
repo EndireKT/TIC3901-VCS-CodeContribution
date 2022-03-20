@@ -10,10 +10,10 @@ import fileInfo.FileInfo;
 
 public class ProgressReader {
 
-    private static File f = null;
+    private static File file = null;
 
     public static ArrayList<FileInfo> read(String currentLocalPath) {
-        ArrayList<FileInfo> fileInfoHistory = new ArrayList<>();
+        ArrayList<FileInfo> fileInfoHistory;
         fileInfoHistory = FileIdentifier.getFilesHistory(currentLocalPath);
         for (FileInfo eachFile : fileInfoHistory){
             initiateRead(eachFile);
@@ -24,8 +24,8 @@ public class ProgressReader {
     private static void initiateRead(FileInfo file){
         Scanner currentFile;
         try{
-            f = TextFile.getFile(file.getFilePath());
-            currentFile = new Scanner(f);
+            ProgressReader.file = TextFile.getFile(file.getFilePath());
+            currentFile = new Scanner(ProgressReader.file);
             String userDetails;
             while (currentFile.hasNext()){
                 userDetails= currentFile.nextLine();

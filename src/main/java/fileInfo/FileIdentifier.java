@@ -6,10 +6,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import commandprompt.CmdPrompt;
-import projectFiles.ProjectFileReader;
 
 public class FileIdentifier {
-    private static ProcessBuilder pBuilder = new ProcessBuilder();
 
     public static ArrayList<FileInfo> getJavaFilesFromPath(
             String pathCode, String commitID, String commitContributor) {
@@ -33,7 +31,7 @@ public class FileIdentifier {
 
             String filePath = pathCode + "\\\\" + fileName;
             File file = new File(filePath);
-            String fileContent = ProjectFileReader.readFile(file);
+            String fileContent = JavaFileReader.readFile(file);
 
             if (fileName.endsWith(".java")) {
                 FileInfo newFile = new FileInfo(pathCode, fileName, commitID, commitContributor, fileContent);

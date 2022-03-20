@@ -1,11 +1,11 @@
 package ui;
 
-import fileInfo.FileInfo;
-import projectFiles.ProjectInfo;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Set;
+
+import fileInfo.FileInfo;
+import projectFiles.ProjectInfo;
 
 public class ResultDisplayer {
 

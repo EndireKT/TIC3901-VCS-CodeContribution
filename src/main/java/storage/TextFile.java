@@ -6,22 +6,22 @@ import java.io.IOException;
 
 public class TextFile {
 
-    private static File f;
+    private static File file;
 
     public static File getFile(String fileName){
         fileName = fileName.replaceAll("\\.java", ".txt");
-        f = null;
+        file = null;
         try {
-            f = new File(fileName);
+            file = new File(fileName);
 //            clearContents(f);
         } catch (NullPointerException e) {
             System.out.println("File not found");
         }
-        return f;
+        return file;
     }
 
     public static void clearContents() throws IOException {
-        FileWriter fw = new FileWriter(f.getAbsolutePath());
+        FileWriter fw = new FileWriter(file.getAbsolutePath());
         fw.write("");
         fw.close();
     }
