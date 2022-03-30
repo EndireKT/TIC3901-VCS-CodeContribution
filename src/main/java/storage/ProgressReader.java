@@ -47,7 +47,8 @@ public class ProgressReader {
     }
 
     private static String parseCommitID(String userDetails){
-        String[] expected = userDetails.split("\s+");
+        //String[] expected = userDetails.split("\s+");
+        String[] expected = userDetails.split(" +");
         if (expected.length > 1){
             return expected[1].trim();
         }
@@ -55,7 +56,8 @@ public class ProgressReader {
     }
 
     private static String parseContributor(String userDetails){
-        String[] expected = userDetails.split("\s+");
+        //String[] expected = userDetails.split("\s+");
+        String[] expected = userDetails.split(" +");
         if (expected.length > 1){
             return expected[2].trim();
         }

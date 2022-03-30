@@ -84,4 +84,11 @@ public class CmdPrompt {
         Process process = pBuilder.start();
         return process;
     }
+
+    public static Process callDirCommand(String pathCode) throws IOException {
+        String commandInput = "cd " + pathCode + " && dir";
+        pBuilder.command("cmd.exe", "/c", commandInput);
+        Process process = pBuilder.start();
+        return process;
+    }
 }
