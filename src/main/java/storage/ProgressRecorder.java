@@ -10,12 +10,12 @@ import fileInfo.FileInfo;
 public class ProgressRecorder {
 
     private static ArrayList<FileInfo> javaFromCommit_CurrentCommit;
-    private static File file;
+    private static File f;
     private static FileWriter fw;
 
     public ProgressRecorder(ArrayList<FileInfo> javaFromCommit_CurrentCommit) {
         this.javaFromCommit_CurrentCommit = javaFromCommit_CurrentCommit;
-        file = null;
+        f = null;
         fw = null;
     }
 
@@ -27,12 +27,13 @@ public class ProgressRecorder {
 
     private static void initiateWrite(FileInfo file){
         try{
-            ProgressRecorder.file = TextFile.getFile(file.getFilePath());
-
-            fw = new FileWriter(ProgressRecorder.file.getAbsolutePath(),true);
+            ProgressRecorder.f = TextFile.getFile(file.getPathCode());
+            fw = new FileWriter(ProgressRecorder.f.getAbsolutePath(),true);
+            fw.write("File Path: " + file.getPathCode()+ System.lineSeparator());
             fw.write("File Name: " + file.getFileName()+ System.lineSeparator());
             fw.write("CommitID: " + file.getCommitID() + System.lineSeparator());
-            fw.write("Main Contributor: " + file.getMainContributor()+ System.lineSeparator()
+            fw.write("Main Contributor: " + file.getMainContributor()+ System.lineSeparator());
+            fw.write("Content: " + file.getFileContent()+ System.lineSeparator()
                     + System.lineSeparator());
             fw.close();
         } catch (IOException e) {
@@ -41,6 +42,10 @@ public class ProgressRecorder {
         }
     }
 
-
+    private static void clearContents() throws IOException {
+        FileWriter fw = new FileWriter(f.getAbsolutePath());
+        fw.write("");
+        fw.close();
+    }
 
 }

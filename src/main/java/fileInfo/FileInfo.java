@@ -48,5 +48,7 @@ public class FileInfo {
     public void setMainContributor(String newMainContributor) {
         mainContributor = newMainContributor;
     }
+
+
 }
 
