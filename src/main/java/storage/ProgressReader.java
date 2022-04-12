@@ -55,6 +55,12 @@ public class ProgressReader {
         return null;
     }
 
+    /** Parse the user details
+     * Splits the user details string into an array
+     *
+     * @param userDetails
+     * @return
+     */
     private static String parseContributor(String userDetails){
         //String[] expected = userDetails.split("\s+");
         String[] expected = userDetails.split(" +");

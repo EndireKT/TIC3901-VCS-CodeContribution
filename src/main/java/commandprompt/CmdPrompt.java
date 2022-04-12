@@ -85,6 +85,13 @@ public class CmdPrompt {
         return process;
     }
 
+    /**
+     * Run the command to get directory information based on the file path
+     *
+     * @param pathCode String to represent the file path
+     * @return
+     * @throws IOException
+     */
     public static Process callDirCommand(String pathCode) throws IOException {
         String commandInput = "cd " + pathCode + " && dir";
         pBuilder.command("cmd.exe", "/c", commandInput);

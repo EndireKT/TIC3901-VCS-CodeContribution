@@ -11,6 +11,14 @@ import commandprompt.CmdPrompt;
 
 public class FileIdentifier {
 
+    /** Get all the paths to Java files in the project
+     * Create FileInfo object for each of the Java file path
+     *
+     * @param pathCode String to represent path
+     * @param commitID Current Commit ID based on the version of the project
+     * @param commitContributor The Author of the commit
+     * @return
+     */
     public static ArrayList<FileInfo> getJavaFilesFromPath(
             String pathCode, String commitID, String commitContributor) {
 
@@ -41,6 +49,11 @@ public class FileIdentifier {
         return javaFiles;
     }
 
+    /** Get the names of the files at the location of the path
+     *
+     * @param pathCode String to represent path
+     * @return
+     */
     private static ArrayList<String> getListOfFileNames(String pathCode) {
         ArrayList<String> output = new ArrayList<>();
         try {
@@ -63,11 +76,22 @@ public class FileIdentifier {
         return null;
     }
 
+    /** Gets the paths for Java files within the project
+     * Starting from pathCode level
+     *
+     * @param pathCode String representing path
+     * @return
+     */
     public static ArrayList<String> getJavaFilesPaths(String pathCode) {
         ArrayList<String> dirLines = getLinesUsingDirCommand(pathCode);
         return getAllJavaFilesPaths(dirLines, pathCode);
     }
 
+    /** Gets directory information based on the path location
+     *
+     * @param pathCode String to represent path location
+     * @return
+     */
     public static ArrayList<String> getLinesUsingDirCommand(String pathCode) {
         ArrayList<String> output = new ArrayList<>();
         try {
@@ -89,6 +113,13 @@ public class FileIdentifier {
         return output;
     }
 
+    /** Gets all Java files from path level and below
+     * using directory information and path
+     *
+     * @param output String Array list with directory information
+     * @param pathCode String representing path
+     * @return
+     */
     public static ArrayList<String> getAllJavaFilesPaths(ArrayList<String> output, String pathCode) {
         ArrayList<String> javaFiles = new ArrayList<>();
         for (int i = 0; i < output.size(); i++) {
