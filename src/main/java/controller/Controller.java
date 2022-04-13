@@ -19,8 +19,8 @@ public class Controller {
      * <p>
      * It does this in sequence:
      * <p>
-     * 1. Get file path from user input (Using View)
-     * 1.1. validate if filePath exist
+     * 1. Get directory path from user input (Using View)
+     * 1.1. validate if directoryPath exist
      * 1.2. validate if the path contains valid Git repo (Using Model)
      * 1.3  validate list of commit and author at filepath (Using Model)
      * <p>
@@ -32,16 +32,16 @@ public class Controller {
      */
     public void execute() {
 
-        String filePath = "";
+        String directoryPath = "";
         Boolean isFilePathInValid = true;
         while (isFilePathInValid) {
-            filePath = viewUi.requestUserForFilePath();
-            model.setPathCodeAndRemoteGitUrl(filePath);
+            directoryPath = viewUi.requestUserForFilePath();
+            model.setPathCodeAndRemoteGitUrl(directoryPath);
             isFilePathInValid = false;
-            if (filePath.equals("quit")){
+            if (directoryPath.equals("quit")){
                 return;
             }
-            if (!FilePathValidator.isValidFilePath(filePath)) {
+            if (!FilePathValidator.isValidFilePath(directoryPath)) {
                 viewUi.showErrorInvalidFilePath();
                 isFilePathInValid = true;
                 continue;
@@ -70,7 +70,7 @@ public class Controller {
             viewUi.showInvalidUserStartCommit();
         }
 
-        model.initiateContributionChecker(userStartCommit, filePath);
+        model.initiateContributionChecker(userStartCommit);
 
         viewUi.displayResults(model.getProjectInfo());
     }

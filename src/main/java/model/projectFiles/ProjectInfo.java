@@ -12,63 +12,50 @@ import model.storage.ProgressRecorder;
 
 public class ProjectInfo {
     private ContributionChecker contributionChecker;
-    private String currentLocalPath;
+    private String directoryPath;
     private String pathCode;
-    private String remoteRepoGitUrl;
     private ArrayList<String> commitList;
-    private ArrayList<String> committerList;
+    private ArrayList<String> authorList;
+    private String userStartCommit;
+
     private boolean hasContributionCheckHisotry;
     private ArrayList<FileInfo> fileInfos_CurrentCommit;
     private ArrayList<FileInfo> fileInfos_PreviousCommit;
     private Set<String> contributorFrequency;
     private ArrayList<String> projectMainContributors;
 
-    public ProjectInfo(String localPath) {
-        currentLocalPath = localPath;
+    public ProjectInfo(String directoryPath,
+                       String pathCode,
+                       ArrayList<String> commitList,
+                       ArrayList<String > authorList,
+                       String userStartCommit) {
+        this.directoryPath = directoryPath;
+        this.pathCode = pathCode;
+        this.commitList = commitList;
+        this.authorList = authorList;
+        this.userStartCommit = userStartCommit;
+
         contributionChecker = new ContributionChecker();
         fileInfos_CurrentCommit = new ArrayList<>();
         fileInfos_PreviousCommit = new ArrayList<>();
     }
 
     /**
-     * Contains the main Logic of the project
+     * Contains the main Logic of the contribution check
      * This method do these in sequence
-     * 1. Obtain pathCode
-     * 2. Obtain remote repo git url
-     * 3. Validate the repo git url
-     * 4. Obtain a list of commit hash, which acts as an ID of the commit
-     * 5. Obtain a list of committer, which represents the name of the person who commit
-     * 6. Validate the two lists to ensure they are fit for comparison
-     * 7. Initiate progress read, it reads the existing progress text file.
+     * 1. Initiate progress read, it reads the existing progress text file.
      * -----This file acts as a history for file evaluation.
-     * 8. Modify the commit and committer list based on the progress text file.
+     * 2. Modify the commit and committer list based on the progress text file.
      * -----This step avoids repeating evaluation of commit that has been evaluated before.
-     * 9. Initiate the contribution check for each remaining commit,
+     * 3. Initiate the contribution check for each remaining commit,
      * -----output is recorded in javaFromCommit_CurrentCommit
-     * 10. Initiate the evaluation of main project contributor using javaFromCommit_CurrentCommit,
+     * 4. Initiate the evaluation of main project contributor using javaFromCommit_CurrentCommit,
      * -----output is recorded in projectContributor
-     * 11. Record the output to a text file
+     * 5. Record the output to a text file
      *
      * @return ProjectInfo
      */
     public ProjectInfo getProjectInfo() {
-
-        pathCode = PathEncoder.getLocalPathInCode(currentLocalPath);
-        remoteRepoGitUrl = PathEncoder.getGitRemoteProjectUrl(pathCode);
-
-        if (!RepoValidator.isRemoteGitRepoExist(remoteRepoGitUrl)) {
-            return null;
-        }
-
-        commitList = CListGenerator.getCommitList(pathCode);
-        committerList = CListGenerator.getAuthorList(pathCode);
-
-        if (!RepoValidator.isCommitExist(commitList)
-                || !RepoValidator.isAuthorExist(committerList)
-                || !RepoValidator.isTwoListSizeEqual(commitList, committerList)) {
-            return null;
-        }
-
 
         initiateProgressRead();
         // todo class & function (ProgressReader.read) to be completed
@@ -102,7 +89,7 @@ public class ProjectInfo {
     }
 
     private void initiateProgressRead() {
-        ArrayList<FileInfo> fileInfoHistory = ProgressReader.read(currentLocalPath);
+        ArrayList<FileInfo> fileInfoHistory = ProgressReader.read(directoryPath);
         if (!fileInfoHistory.isEmpty()) {
             fileInfos_PreviousCommit = fileInfoHistory;
             hasContributionCheckHisotry = true;
@@ -142,7 +129,7 @@ public class ProjectInfo {
         int size = commitList.size();
         for (int commitListIterator = size - 1; commitListIterator >= 0; commitListIterator--) {
             String currentCommit = commitList.get(commitListIterator);
-            String committer = committerList.get(commitListIterator);
+            String committer = authorList.get(commitListIterator);
 
             fileInfos_PreviousCommit = fileInfos_CurrentCommit;
             initiateGitCheckOutCommit(currentCommit);

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Model {
     private ProjectInfo projectInfo;
     private static Model model = null;
+    private String directoryPath;
     private String pathCode;
     private String remoteRepoGitUrl;
     private ArrayList<String> commitList;
@@ -26,8 +27,9 @@ public class Model {
         return model;
     }
 
-    public void initiateContributionChecker(String userStartCommit, String filePath){
-
+    public void initiateContributionChecker(String userStartCommit){
+        projectInfo = new ProjectInfo(directoryPath, pathCode, commitList, authorList, userStartCommit);
+        projectInfo.getProjectInfo();
     }
 
     public ProjectInfo getProjectInfo(){
@@ -44,13 +46,14 @@ public class Model {
         return authorList;
     }
 
-    public void setPathCodeAndRemoteGitUrl(String filePath){
-        pathCode = PathEncoder.getLocalPathInCode(filePath);
+    public void setPathCodeAndRemoteGitUrl(String directoryPath){
+        this.directoryPath = directoryPath;
+        pathCode = PathEncoder.getLocalPathInCode(directoryPath);
         remoteRepoGitUrl = PathEncoder.getGitRemoteProjectUrl(pathCode);
     }
 
     public Boolean isValidCommitAndAuthorList(){
-        populateCommitandAuthorList();
+        populateCommitAndAuthorList();
         if (RepoValidator.isCommitExist(commitList) && RepoValidator.isCommitExist(commitList)) {
             return RepoValidator.isTwoListSizeEqual(commitList, authorList);
         }
@@ -62,11 +65,15 @@ public class Model {
     }
 
     public Boolean isValidCommit(String userStartCommit){
-        // todo
-        return null;
+        for (String commit : commitList){
+            if (userStartCommit.equals(commit)){
+                return true;
+            }
+        }
+        return false;
     }
 
-    private void populateCommitandAuthorList(){
+    private void populateCommitAndAuthorList(){
         commitList = CListGenerator.getCommitList(pathCode);
         authorList = CListGenerator.getAuthorList(pathCode);
     }
