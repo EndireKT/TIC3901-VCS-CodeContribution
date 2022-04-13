@@ -32,6 +32,8 @@ public class Controller {
      */
     public void execute() {
 
+        // todo some committer->authors are not updated yet
+
         String directoryPath = "";
         Boolean isFilePathInValid = true;
         while (isFilePathInValid) {

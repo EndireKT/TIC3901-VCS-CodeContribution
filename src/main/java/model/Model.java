@@ -37,12 +37,10 @@ public class Model {
     }
 
     public ArrayList<String> getListOfCommits() {
-
         return commitList;
     }
 
     public ArrayList<String> getListOfAuthors() {
-
         return authorList;
     }
 

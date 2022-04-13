@@ -45,7 +45,7 @@ public class ProjectInfo {
      * This method do these in sequence
      * 1. Initiate progress read, it reads the existing progress text file.
      * -----This file acts as a history for file evaluation.
-     * 2. Modify the commit and committer list based on the progress text file.
+     * 2. Modify the commit and author list based on the progress text file.
      * -----This step avoids repeating evaluation of commit that has been evaluated before.
      * 3. Initiate the contribution check for each remaining commit,
      * -----output is recorded in javaFromCommit_CurrentCommit
@@ -61,8 +61,10 @@ public class ProjectInfo {
         // todo class & function (ProgressReader.read) to be completed
         if (hasContributionCheckHisotry) {
             // todo function (modifyCommitAndCommitterList) to be completed
-            modifyCommitAndCommitterList();
+            modifyCommitAndAuthorList();
         }
+
+        // todo use userStartCommit
 
         initiateContributionCheckForEachCommit();
 
@@ -98,7 +100,7 @@ public class ProjectInfo {
         }
     }
 
-    private void modifyCommitAndCommitterList() {
+    private void modifyCommitAndAuthorList() {
         String commitHistory = fileInfos_PreviousCommit.get(0).getCommitID();
         // todo CONTINUE FROM HERE
         int i;
@@ -118,7 +120,7 @@ public class ProjectInfo {
     /**
      * Initialize the contribution check for each commit
      * Perform these steps in sequence:
-     * 1. Obtain commit ID and committer name from the back of the list (from oldest to most recent)
+     * 1. Obtain commit ID and author name from the back of the list (from oldest to most recent)
      * 2. Keep a copy of the FileInfos in FileInfos_PreviousCommit
      * -----FileInfos_PreviousCommit stores the FileInfos of previous commit
      * 3. Git checkout using the commit ID
@@ -129,11 +131,11 @@ public class ProjectInfo {
         int size = commitList.size();
         for (int commitListIterator = size - 1; commitListIterator >= 0; commitListIterator--) {
             String currentCommit = commitList.get(commitListIterator);
-            String committer = authorList.get(commitListIterator);
+            String author = authorList.get(commitListIterator);
 
             fileInfos_PreviousCommit = fileInfos_CurrentCommit;
             initiateGitCheckOutCommit(currentCommit);
-            identifyJavaFilesFromCurrentCommit(currentCommit, committer);
+            identifyJavaFilesFromCurrentCommit(currentCommit, author);
             initiateContributionCheckForEachFileInfo(commitListIterator, size);
         }
     }
@@ -156,11 +158,11 @@ public class ProjectInfo {
      * and record a list of FileInfo for all captured Java file into FileInfos_CurrentCommit
      *
      * @param commitHash String that represents the Hash of the commit
-     * @param committer  String that represents the ID of the committer
+     * @param author  String that represents the ID of the author
      */
-    private void identifyJavaFilesFromCurrentCommit(String commitHash, String committer) {
+    private void identifyJavaFilesFromCurrentCommit(String commitHash, String author) {
         try {
-            fileInfos_CurrentCommit = FileIdentifier.getJavaFilesFromPath(pathCode, commitHash, committer);
+            fileInfos_CurrentCommit = FileIdentifier.getJavaFilesFromPath(pathCode, commitHash, author);
         } catch (Exception e) {
             System.out.println("No Java files at the directory");
             e.printStackTrace();

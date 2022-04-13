@@ -7,12 +7,13 @@ public class Ui {
     private static Scanner inputScanner = new Scanner(System.in);
 
     public Ui() {
+
     }
 
     public String getProjectPath() {
         System.out.println("Enter path to file directory to check for contribution:");
-        System.out.println("Key-in \"quit\" to leave the program");
-        String userInput = inputScanner.nextLine().trim();
+        System.out.println("(Key-in \"quit\" to leave the program)");
+        String userInput = inputScanner.nextLine();
         return userInput;
 
     }

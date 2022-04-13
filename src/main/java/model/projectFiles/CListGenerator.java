@@ -36,17 +36,17 @@ public class CListGenerator {
     public static ArrayList<String> getAuthorList(String pathCode) {
         try {
             ArrayList<String> authors = new ArrayList<>();
-            Process process = CmdPrompt.getCommitterName(pathCode);
+            Process process = CmdPrompt.getAuthorName(pathCode);
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             boolean hasLine = true;
 
             while (hasLine) {
-                String committerName = reader.readLine();
-                if (committerName == null) {
+                String AuthorName = reader.readLine();
+                if (AuthorName == null) {
                     hasLine = false;
                     continue;
                 }
-                authors.add(committerName);
+                authors.add(AuthorName);
             }
             return authors;
         } catch (IOException e) {

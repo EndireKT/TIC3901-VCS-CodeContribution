@@ -66,7 +66,7 @@ public class CmdPrompt {
      * @return Process
      * @throws IOException
      */
-    public static Process getAuthor(String pathCode) throws IOException {
+    public static Process getAuthorName(String pathCode) throws IOException {
         String commandInput = "cd " + pathCode + " && git log --pretty=%an";
         pBuilder.command("cmd.exe", "/c", commandInput);
         Process process = pBuilder.start();
