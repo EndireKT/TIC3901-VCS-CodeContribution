@@ -1,4 +1,4 @@
-package fileInfo;
+package model.fileInfo;
 
 public class FileInfo {
 

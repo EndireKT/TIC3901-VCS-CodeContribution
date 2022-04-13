@@ -1,4 +1,4 @@
-package storage;
+package model.storage;
 
 import java.io.File;
 import java.io.FileWriter;

@@ -1,4 +1,4 @@
-package fileInfo;
+package model.fileInfo;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import commandprompt.CmdPrompt;
+import model.commandprompt.CmdPrompt;
 
 public class FileIdentifier {
 

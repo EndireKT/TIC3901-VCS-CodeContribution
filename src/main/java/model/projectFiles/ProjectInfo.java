@@ -1,14 +1,14 @@
-package projectFiles;
+package model.projectFiles;
 
 import java.util.ArrayList;
 import java.util.Set;
 
-import commandprompt.CmdPrompt;
-import contributionChecker.ContributionChecker;
-import fileInfo.FileIdentifier;
-import fileInfo.FileInfo;
-import storage.ProgressReader;
-import storage.ProgressRecorder;
+import model.commandprompt.CmdPrompt;
+import model.contributionChecker.ContributionChecker;
+import model.fileInfo.FileIdentifier;
+import model.fileInfo.FileInfo;
+import model.storage.ProgressReader;
+import model.storage.ProgressRecorder;
 
 public class ProjectInfo {
     private ContributionChecker contributionChecker;

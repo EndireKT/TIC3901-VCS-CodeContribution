@@ -1,4 +1,4 @@
-package fileInfo;
+package model.fileInfo;
 
 import java.io.BufferedReader;
 import java.io.File;

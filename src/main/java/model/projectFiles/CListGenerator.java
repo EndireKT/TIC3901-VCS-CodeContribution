@@ -1,11 +1,11 @@
-package projectFiles;
+package model.projectFiles;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import commandprompt.CmdPrompt;
+import model.commandprompt.CmdPrompt;
 
 public class CListGenerator {
 

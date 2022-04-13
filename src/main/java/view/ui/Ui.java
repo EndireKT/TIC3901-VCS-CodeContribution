@@ -1,6 +1,6 @@
-package ui;
+package view.ui;
 
-import projectFiles.ProjectInfo;
+import model.projectFiles.ProjectInfo;
 import java.util.Scanner;
 
 public class Ui {

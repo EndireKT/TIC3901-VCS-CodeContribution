@@ -1,4 +1,4 @@
-package contributionChecker;
+package model.contributionChecker;
 
 import java.util.Arrays;
 

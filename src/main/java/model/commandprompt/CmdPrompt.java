@@ -1,4 +1,4 @@
-package commandprompt;
+package model.commandprompt;
 
 import java.io.IOException;
 
@@ -53,6 +53,21 @@ public class CmdPrompt {
      */
     public static Process getCommitterName(String pathCode) throws IOException {
         String commandInput = "cd " + pathCode + " && git log --pretty=%cn";
+        pBuilder.command("cmd.exe", "/c", commandInput);
+        Process process = pBuilder.start();
+        return process;
+    }
+
+    /**
+     * Initialize a command prompt and execute "git log --pretty=%an" in command prompt
+     * git log --pretty=%an >> return all author name
+     *
+     * @param pathCode String representing the file path
+     * @return Process
+     * @throws IOException
+     */
+    public static Process getAuthor(String pathCode) throws IOException {
+        String commandInput = "cd " + pathCode + " && git log --pretty=%an";
         pBuilder.command("cmd.exe", "/c", commandInput);
         Process process = pBuilder.start();
         return process;

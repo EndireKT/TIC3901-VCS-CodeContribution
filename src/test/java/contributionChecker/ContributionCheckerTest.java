@@ -1,5 +1,7 @@
 package contributionChecker;
 
+import model.contributionChecker.ContributionChecker;
+import model.contributionChecker.LevenshteinDistance;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

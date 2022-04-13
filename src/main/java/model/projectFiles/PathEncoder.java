@@ -1,9 +1,9 @@
-package projectFiles;
+package model.projectFiles;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import commandprompt.CmdPrompt;
+import model.commandprompt.CmdPrompt;
 
 public class PathEncoder {
 

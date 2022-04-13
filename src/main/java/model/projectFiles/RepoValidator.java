@@ -1,4 +1,4 @@
-package projectFiles;
+package model.projectFiles;
 
 import java.util.ArrayList;
 

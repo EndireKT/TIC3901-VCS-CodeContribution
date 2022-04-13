@@ -1,12 +1,12 @@
-package storage;
+package model.storage;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import fileInfo.FileIdentifier;
-import fileInfo.FileInfo;
+import model.fileInfo.FileIdentifier;
+import model.fileInfo.FileInfo;
 
 public class ProgressReader {
 

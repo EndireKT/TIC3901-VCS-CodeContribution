@@ -1,9 +1,9 @@
-package contributionChecker;
+package model.contributionChecker;
 
 import java.util.ArrayList;
 import java.util.Set;
 
-import fileInfo.FileInfo;
+import model.fileInfo.FileInfo;
 
 public class ContributionChecker {
 
