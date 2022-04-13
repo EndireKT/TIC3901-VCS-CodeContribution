@@ -33,9 +33,9 @@ public class CListGenerator {
     }
 
     @org.jetbrains.annotations.Nullable
-    public static ArrayList<String> getCommitterList(String pathCode) {
+    public static ArrayList<String> getAuthorList(String pathCode) {
         try {
-            ArrayList<String> committers = new ArrayList<>();
+            ArrayList<String> authors = new ArrayList<>();
             Process process = CmdPrompt.getCommitterName(pathCode);
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             boolean hasLine = true;
@@ -46,11 +46,11 @@ public class CListGenerator {
                     hasLine = false;
                     continue;
                 }
-                committers.add(committerName);
+                authors.add(committerName);
             }
-            return committers;
+            return authors;
         } catch (IOException e) {
-            System.out.println("Unable to get committers");
+            System.out.println("Unable to get authors");
             return null;
         }
     }

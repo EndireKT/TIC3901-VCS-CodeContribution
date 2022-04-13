@@ -15,26 +15,17 @@ public class Ui {
         String localPath = getProjectPath();
         newProject = new ProjectInfo(localPath);
         newProject.getProjectInfo();
-
-        if (newProject == null) {
-            System.out.println("Failed to check project");
-        }
-
-        ResultDisplayer resultDisplayer = new ResultDisplayer(newProject);
-        resultDisplayer.printIndividualFileContributor();
-        resultDisplayer.printContributorFrequency();
-        resultDisplayer.printProjectMainContributors();
     }
 
-    private static String getProjectPath() {
+    public String getProjectPath() {
         System.out.println("Enter path to file directory to check for contribution:");
-        String localPath = inputScanner.nextLine().trim();
-        // todo validate the path
-        return localPath;
+        System.out.println("Key-in \"quit\" to leave the program");
+        return inputScanner.nextLine().trim();
+
     }
 
-    public static void main(String[] args) {
-        Ui ui = new Ui();
-        ui.execute();
+    public String getuserCommit(){
+        System.out.println("Enter a commit hash from above list to begin contribution check:");
+        return inputScanner.nextLine().trim();
     }
 }

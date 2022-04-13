@@ -40,6 +40,7 @@ public class PathEncoder {
 
             return remoteUrl;
         } catch (Exception e) {
+            System.out.println("Unable to get remote git url");
             e.printStackTrace();
         }
         return null;

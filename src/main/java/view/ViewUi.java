@@ -1,28 +1,31 @@
 package view;
 
 import model.projectFiles.ProjectInfo;
+import view.ui.ResultDisplayer;
+import view.ui.Ui;
 
 import java.util.ArrayList;
 
 public class ViewUi {
+    Ui ui;
 
     public ViewUi(){
-
+        ui = new Ui();
     }
 
     public void displayResults(ProjectInfo projectInfo) {
-        // todo
+        ResultDisplayer resultDisplayer = new ResultDisplayer(projectInfo);
+        resultDisplayer.printIndividualFileContributor();
+        resultDisplayer.printContributorFrequency();
+        resultDisplayer.printProjectMainContributors();
     }
 
     public String requestUserForFilePath(){
-        // todo fillthis up
-        System.out.println("Key-in \"quit\" to leave the program");
-        return null;
+        return ui.getProjectPath();
     }
 
     public String requestUserForCommit() {
-        // todo
-        return null;
+        return ui.getuserCommit();
     }
 
     public void showListOfCommitsAndAuthor (ArrayList<String> commitList, ArrayList<String> authorList){
@@ -36,7 +39,7 @@ public class ViewUi {
     }
 
     public void showErrorInvalidCommitAndAuthor(){
-        System.out.println("The commit and author list at the directory is invalid");
+        System.out.println("The commit and author list at the directory is invalid and does not tally");
     }
 
     public void showErrorInvalidFilePath(){

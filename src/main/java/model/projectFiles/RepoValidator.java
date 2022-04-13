@@ -33,13 +33,13 @@ public class RepoValidator {
     }
 
     /**
-     * Check whether committerList has contents or empty
+     * Check whether authorList has contents or empty
      *
-     * @param committerList ArrayList<String> containing the list of commit hash
+     * @param authorList ArrayList<String> containing the list of commit hash
      * @return boolean true if the list is NOT empty; false if the list is empty
      */
-    public static boolean isCommitterExist(ArrayList<String> committerList) {
-        if (committerList.isEmpty()) {
+    public static boolean isAuthorExist(ArrayList<String> authorList) {
+        if (authorList.isEmpty()) {
             System.out.println("Unable to check contribution due to missing Commit details");
             return false;
         }
@@ -47,16 +47,15 @@ public class RepoValidator {
     }
 
     /**
-     * Check whether the size of commitlist is equals to committerlist
+     * Check whether the size of commitlist is equals to authorList
      * Return true if the two list has same size, indicating that the extracted commit detail is valid
      *
      * @param commitList ArrayList<String> containing the list of commit hash
-     * @param committerList ArrayList<String> containing the list of commit hash
+     * @param authorList ArrayList<String> containing the list of author
      * @return boolean true if the two list has same size; false if otherwise
      */
-    public static boolean isTwoListSizeEqual(ArrayList<String> commitList, ArrayList<String> committerList) {
-        if (commitList.size() != committerList.size()) {
-            System.out.println("Commit details do not tally.");
+    public static boolean isTwoListSizeEqual(ArrayList<String> commitList, ArrayList<String> authorList) {
+        if (commitList.size() != authorList.size()) {
             return false;
         }
         return true;

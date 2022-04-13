@@ -1,9 +1,11 @@
 package controller;
 
+import java.io.File;
+
 public class FilePathValidator {
 
     public static boolean isValidFilePath(String filePath){
-        // todo validation logic
-        return true;
+        File file = new File(filePath);
+        return file.isDirectory();
     }
 }

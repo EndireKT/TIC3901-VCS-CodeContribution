@@ -61,10 +61,10 @@ public class ProjectInfo {
         }
 
         commitList = CListGenerator.getCommitList(pathCode);
-        committerList = CListGenerator.getCommitterList(pathCode);
+        committerList = CListGenerator.getAuthorList(pathCode);
 
         if (!RepoValidator.isCommitExist(commitList)
-                || !RepoValidator.isCommitterExist(committerList)
+                || !RepoValidator.isAuthorExist(committerList)
                 || !RepoValidator.isTwoListSizeEqual(commitList, committerList)) {
             return null;
         }

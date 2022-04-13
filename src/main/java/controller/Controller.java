@@ -36,6 +36,7 @@ public class Controller {
         Boolean isFilePathInValid = true;
         while (isFilePathInValid) {
             filePath = viewUi.requestUserForFilePath();
+            model.setPathCodeAndRemoteGitUrl(filePath);
             isFilePathInValid = false;
             if (filePath.equals("quit")){
                 return;
