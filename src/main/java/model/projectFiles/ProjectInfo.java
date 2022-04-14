@@ -18,7 +18,8 @@ public class ProjectInfo {
     private ArrayList<String> authorList;
     private String userStartCommit;
 
-    private boolean hasContributionCheckHisotry;
+    private boolean hasUpdatedContributionCheckHisotry;
+    private String commitInProgress;
     private ArrayList<FileInfo> fileInfos_CurrentCommit;
     private ArrayList<FileInfo> fileInfos_PreviousCommit;
     private Set<String> contributorFrequency;
@@ -60,13 +61,9 @@ public class ProjectInfo {
         modifyCommitAndAuthorList(userStartCommit);
 
         initiateProgressRead();
-        // todo class & function (ProgressReader.read) to be completed
-        if (hasContributionCheckHisotry) {
-            // todo function (modifyCommitAndCommitterList) to be completed
-            modifyCommitAndAuthorList();
+        if (hasUpdatedContributionCheckHisotry) {
+            modifyCommitAndAuthorList(commitInProgress);
         }
-
-        // todo use userStartCommit
 
         initiateContributionCheckForEachCommit();
 
@@ -94,28 +91,13 @@ public class ProjectInfo {
 
     private void initiateProgressRead() {
         ArrayList<FileInfo> fileInfoHistory = ProgressReader.read(directoryPath);
+        hasUpdatedContributionCheckHisotry = false;
         if (!fileInfoHistory.isEmpty()) {
-            fileInfos_PreviousCommit = fileInfoHistory;
-            hasContributionCheckHisotry = true;
-        } else {
-            hasContributionCheckHisotry = false;
-        }
-    }
-
-    private void modifyCommitAndAuthorList() {
-        String commitHistory = fileInfos_PreviousCommit.get(0).getCommitID();
-        // todo CONTINUE FROM HERE
-        int i;
-        for (i = 0; i < commitList.size(); i++) {
-            if (commitHistory.equals(commitList.get(i))) {
-                break;
+            commitInProgress = fileInfoHistory.get(0).getCommitID();
+            if (isFileProgressWithinCommitList(commitInProgress)){
+                fileInfos_PreviousCommit = fileInfoHistory;
+                hasUpdatedContributionCheckHisotry = true;
             }
-        }
-
-        if (i == commitList.size()) {
-            return;
-        } else {
-            // todo
         }
     }
 
@@ -134,9 +116,19 @@ public class ProjectInfo {
         authorList = tempAuthorList;
     }
 
+    private Boolean isFileProgressWithinCommitList(String commitInProgress){
+        for (String commit : commitList){
+            if (commit.equals(commitInProgress)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Initialize the contribution check for each commit
      * Perform these steps in sequence:
+     * 0. If there is a previous record of FileInfo, save it in fileInfos_CurrentCommit
      * 1. Obtain commit ID and author name from the back of the list (from oldest to most recent)
      * 2. Keep a copy of the FileInfos in FileInfos_PreviousCommit
      * -----FileInfos_PreviousCommit stores the FileInfos of previous commit
@@ -146,6 +138,9 @@ public class ProjectInfo {
      */
     private void initiateContributionCheckForEachCommit() {
         int size = commitList.size();
+        if (!fileInfos_PreviousCommit.isEmpty()) {
+            fileInfos_CurrentCommit = fileInfos_PreviousCommit;
+        }
         for (int commitListIterator = size - 1; commitListIterator >= 0; commitListIterator--) {
             String currentCommit = commitList.get(commitListIterator);
             String author = authorList.get(commitListIterator);
