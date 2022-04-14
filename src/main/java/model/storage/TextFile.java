@@ -9,13 +9,14 @@ public class TextFile {
     private static File file;
 
     public static File getFile(String fileName){
-        fileName = fileName.replaceAll("\\.java", ".txt");
+//        fileName = fileName.replaceAll("\\.java", ".txt");
+        fileName = fileName + "\\\\ProjectCache.txt";
         file = null;
         try {
             file = new File(fileName);
 //            clearContents(f);
         } catch (NullPointerException e) {
-            System.out.println("File not found");
+            System.out.println("File not found, File will be created at " + fileName);
         }
         return file;
     }
