@@ -29,13 +29,15 @@ public class ViewUi {
     }
 
     public void showListOfCommitsAndAuthor (ArrayList<String> commitList, ArrayList<String> authorList){
-        System.out.println("List of Commit : Author");
+        System.out.println("\nThis is the List of Commit : Author in chronological order (latest on top)");
+        String format = "%-20s%s%n";
+        System.out.printf(format, "COMMIT HASH", "AUTHOR");
         for (int i = 0; i < commitList.size(); i++){
             String commit = commitList.get(i);
             String author = authorList.get(i);
-            String format = "%-40s%s%n";
             System.out.printf(format, commit, author);
         }
+        System.out.println();
     }
 
     public void showErrorInvalidCommitAndAuthor(){

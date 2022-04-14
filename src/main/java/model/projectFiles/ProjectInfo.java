@@ -27,7 +27,7 @@ public class ProjectInfo {
     public ProjectInfo(String directoryPath,
                        String pathCode,
                        ArrayList<String> commitList,
-                       ArrayList<String > authorList,
+                       ArrayList<String> authorList,
                        String userStartCommit) {
         this.directoryPath = directoryPath;
         this.pathCode = pathCode;
@@ -56,6 +56,8 @@ public class ProjectInfo {
      * @return ProjectInfo
      */
     public ProjectInfo getProjectInfo() {
+
+        modifyCommitAndAuthorList(userStartCommit);
 
         initiateProgressRead();
         // todo class & function (ProgressReader.read) to be completed
@@ -117,6 +119,21 @@ public class ProjectInfo {
         }
     }
 
+    private void modifyCommitAndAuthorList(String userStartCommit) {
+        ArrayList<String> tempCommitList = new ArrayList<>();
+        ArrayList<String> tempAuthorList = new ArrayList<>();
+
+        for (int i = 0; i < commitList.size(); i++) {
+            tempCommitList.add(commitList.get(i));
+            tempAuthorList.add(authorList.get(i));
+            if (commitList.get(i).equals(userStartCommit)){
+                break;
+            }
+        }
+        commitList = tempCommitList;
+        authorList = tempAuthorList;
+    }
+
     /**
      * Initialize the contribution check for each commit
      * Perform these steps in sequence:
@@ -158,7 +175,7 @@ public class ProjectInfo {
      * and record a list of FileInfo for all captured Java file into FileInfos_CurrentCommit
      *
      * @param commitHash String that represents the Hash of the commit
-     * @param author  String that represents the ID of the author
+     * @param author     String that represents the ID of the author
      */
     private void identifyJavaFilesFromCurrentCommit(String commitHash, String author) {
         try {

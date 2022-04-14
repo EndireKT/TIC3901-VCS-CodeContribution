@@ -20,7 +20,7 @@ public class ResultDisplayer {
         if (fileInfos_CurrentCommit.isEmpty()) {
             System.out.println("No files are found in Java directory.");
         } else {
-            System.out.println("Individual File Contributors:");
+            System.out.println("\nIndividual File Contributors:");
             for (FileInfo fileInfo : fileInfos_CurrentCommit) {
                 System.out.println(fileInfo.getFilePath());
                 System.out.println("File contributor: " + fileInfo.getMainContributor());

@@ -15,7 +15,6 @@ public class Ui {
         System.out.println("(Key-in \"quit\" to leave the program)");
         String userInput = inputScanner.nextLine();
         return userInput;
-
     }
 
     public String getuserCommit(){
